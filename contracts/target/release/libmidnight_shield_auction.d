@@ -1,0 +1,1 @@
+/Users/harish/midnight-shield/contracts/target/release/libmidnight_shield_auction.rlib: /Users/harish/midnight-shield/contracts/build.rs /Users/harish/midnight-shield/contracts/src/SealedBidAuction.compact /Users/harish/midnight-shield/contracts/src/lib.rs /Users/harish/midnight-shield/contracts/target/release/build/midnight-shield-auction-38ea737218b20572/out/compact_source.rs

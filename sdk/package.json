@@ -1,0 +1,37 @@
+{
+  "name": "@midnight-shield/auction-sdk",
+  "version": "0.1.0",
+  "description": "TypeScript SDK for MidnightShield Privacy-Preserving Auction Protocol",
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc && tsc -m ESNext --outDir dist/esm",
+    "dev": "tsc -w",
+    "test": "jest",
+    "lint": "eslint src --ext .ts"
+  },
+  "keywords": [
+    "midnight",
+    "zk",
+    "auction",
+    "privacy",
+    "sealed-bid",
+    "vickrey"
+  ],
+  "author": "MidnightShield Team",
+  "license": "MIT",
+  "peerDependencies": {
+    "@midnight-ntwrk/midnight-js-sdk": "^0.3.0"
+  },
+  "devDependencies": {
+    "@midnight-ntwrk/midnight-js-sdk": "^0.3.0",
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0",
+    "jest": "^29.0.0",
+    "eslint": "^8.0.0"
+  }
+}

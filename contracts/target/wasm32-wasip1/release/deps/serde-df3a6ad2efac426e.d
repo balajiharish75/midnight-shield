@@ -1,0 +1,14 @@
+/Users/harish/midnight-shield/contracts/target/wasm32-wasip1/release/deps/serde-df3a6ad2efac426e.d: /Users/harish/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.229/src/lib.rs /Users/harish/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.229/src/integer128.rs /Users/harish/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.229/src/private/mod.rs /Users/harish/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.229/src/private/de.rs /Users/harish/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.229/src/private/ser.rs /Users/harish/midnight-shield/contracts/target/wasm32-wasip1/release/build/serde-8a1e84bf67d78337/out/private.rs
+
+/Users/harish/midnight-shield/contracts/target/wasm32-wasip1/release/deps/libserde-df3a6ad2efac426e.rlib: /Users/harish/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.229/src/lib.rs /Users/harish/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.229/src/integer128.rs /Users/harish/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.229/src/private/mod.rs /Users/harish/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.229/src/private/de.rs /Users/harish/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.229/src/private/ser.rs /Users/harish/midnight-shield/contracts/target/wasm32-wasip1/release/build/serde-8a1e84bf67d78337/out/private.rs
+
+/Users/harish/midnight-shield/contracts/target/wasm32-wasip1/release/deps/libserde-df3a6ad2efac426e.rmeta: /Users/harish/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.229/src/lib.rs /Users/harish/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.229/src/integer128.rs /Users/harish/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.229/src/private/mod.rs /Users/harish/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.229/src/private/de.rs /Users/harish/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.229/src/private/ser.rs /Users/harish/midnight-shield/contracts/target/wasm32-wasip1/release/build/serde-8a1e84bf67d78337/out/private.rs
+
+/Users/harish/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.229/src/lib.rs:
+/Users/harish/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.229/src/integer128.rs:
+/Users/harish/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.229/src/private/mod.rs:
+/Users/harish/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.229/src/private/de.rs:
+/Users/harish/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.229/src/private/ser.rs:
+/Users/harish/midnight-shield/contracts/target/wasm32-wasip1/release/build/serde-8a1e84bf67d78337/out/private.rs:
+
+# env-dep:OUT_DIR=/Users/harish/midnight-shield/contracts/target/wasm32-wasip1/release/build/serde-8a1e84bf67d78337/out

@@ -1,0 +1,5 @@
+cargo:rerun-if-changed=src/SealedBidAuction.compact
+cargo:rustc-link-arg=--import-memory
+cargo:rustc-link-arg=--export=__heap_base
+cargo:rustc-link-arg=--export=__data_end
+cargo:rustc-link-arg=--max-memory=67108864
