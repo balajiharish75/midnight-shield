@@ -1,104 +1,76 @@
-# About MidnightShield
-
-> **Bid in private. Prove you can pay. Win fairly.**  
-> Privacy-preserving sealed-bid (Vickrey / first-price) auctions for NFTs on **Midnight Network** — where bids stay hidden, solvency is proven in zero-knowledge, and settlement is verifiably fair.
-
----
+# MidnightShield — Privacy-Preserving Sealed-Bid Auction on Midnight Network
 
 ## Inspiration
 
-We watched NFT auctions leak everything.
+Traditional NFT auctions leak everything. A wallet places a `5,000 DUST` bid — and the mempool, the seller, every sniper bot sees the amount, the bidder address, even the seller's reserve. Whales get targeted, floors get manipulated, and last-second snipes steal sales. Even so-called “private” marketplaces just hide it in the UI — the chain still knows.
 
-A wallet places a 5,000 DUST bid — and the mempool, the seller, every sniper bot sees `5000`, `0x...bidder`, `reserve=3000`. Whales get targeted, floors get manipulated, last-second snipes steal sales. Even “private” marketplaces just hide it in the UI — the chain still knows.
-
-Midnight flips that model: **what if the chain only ever sees a hash, and the truth is proven in ZK?**
+Midnight flips that model. What if the chain only ever sees a hash, and the truth is proven in zero-knowledge?
 
 We wanted an auction where:
 
-* No one — not seller, not rival bidder, not the network — knows $b_i$ until reveal
-* You can prove *“I can afford this”* without showing your balance
-* The seller can prove *“reserve was met”* without revealing the reserve
-* Vickrey pricing makes honest bidding rational: winner pays second price, not their own
+- No one — not the seller, not rival bidders, not the network — knows $b_i$ until reveal
+- You can prove *“I can afford this”* without showing your balance
+- The seller can prove *“reserve was met”* without revealing the reserve
+- Vickrey pricing makes honest bidding rational: winner pays the second price, not their own
 
 MidnightShield is DeFi-grade privacy for a problem everyone thought needed transparency.
 
----
+## What I Learned
 
-## What We Learned
+**Compact is not Solidity.** Compact’s `disclose()` model forced witness-first thinking. Every `circuit` parameter that touches the ledger (`Map.insert`, `ledger =`) must be explicitly `disclose()`d — otherwise the compiler throws `potential witness-value disclosure must be declared`. Immutability matters too: `const bid = lookup(k); bid.revealed = true` is illegal — you must reconstruct a new struct and `insert` it.
 
-**1. Compact is not Solidity.**  
-Compact’s `disclose()` model forced us to think witness-first. Every `circuit` param that touches the ledger (`Map.insert`, `ledger =`) must be explicitly `disclose()`d — the compiler yells `potential witness-value disclosure must be declared` otherwise. Immutability matters too: `const bid = lookup(k); bid.revealed = true` is illegal — you reconstruct a new struct and `insert` it.
-
-**2. ZK is plumbing, not magic.**  
-Writing stubs like `commit_bid`, `reveal_bid`, `verify_reserve` taught us the real circuits are hashes and comparisons in ZK:
+**ZK is plumbing, not magic.** Writing stubs for `commit_bid`, `reveal_bid`, and `verify_reserve` taught us the real circuits are just hashes and comparisons in ZK:
 
 $$ C = H(amount \parallel salt \parallel nftContract \parallel tokenId \parallel deadline) $$
 
-$$ \text{valid} := ( H(amount' \parallel salt' ) == C ) $$
+$$ \text{valid} := (H(amount' \parallel salt') == C) $$
 
 $$ \text{reserveMet} := (winningBid \geq reservePrice) \land (H(reservePrice \parallel reserveSalt) == reserveCommitment) $$
 
-For Vickrey:
+For Vickrey pricing:
 
-$$ \text{let } b_{(1)} \geq b_{(2)} \geq \dots \geq b_{(n)} \quad \Rightarrow \quad winner = argmax(b_i),\; price = \begin{cases} b_{(2)} & \text{if Vickrey} \\ b_{(1)} & \text{if first-price} \end{cases} $$
+$$ \text{let } b_{(1)} \geq b_{(2)} \geq \dots \geq b_{(n)} \Rightarrow winner = argmax(b_i),\; price = \begin{cases} b_{(2)} & \text{if Vickrey} \\ b_{(1)} & \text{if first-price} \end{cases} $$
 
-Proving solvency without revealing balance is a range proof: $balance \geq amount$ with $balance$ private.
+Proving solvency without revealing balance is a range proof: $balance \geq amount$ where $balance$ stays private.
 
-**3. Toolchain trumps code.**  
-Midnight’s `blake3 1.8.7` vs `1.5`, `borsh 1.8.1` vs `1.2`, `midnight-circuits 7.2.4` vs `7` — lockfile drift kills `cargo build`. And `wasi-sdk` / Apple clang 17 doesn’t ship `wasm32-wasip1` sysroot, so `blst` C compiles fail for WASM even when native `cargo build --release` passes in 0.04s. Verification became: Compact → native Rust → `tsc --noEmit`.
+**Toolchain matters more than code.** Midnight’s `blake3 1.8.7` vs `1.5`, `borsh 1.8.1` vs `1.2`, and `midnight-circuits 7.2.4` vs `7` — tiny lockfile drifts break `cargo build`. And `wasi-sdk` / Apple clang 17 doesn’t ship a `wasm32-wasip1` sysroot, so `blst` C files fail for WASM even when native `cargo build --release` passes in 0.04s. We learned to verify via `Compact → native Rust → tsc --noEmit`.
 
----
+## How I Built the Project
 
-## How We Built It
+I built MidnightShield as a full-stack privacy auction:
 
-**Stack:** Compact `0.5.2` (`pragma >=0.16.0`) + Rust (`blake3`, `midnight-circuits 7.2`, `wasm-bindgen`) + TypeScript SDK + React hook, on `midnight-shield` (private, `master`).
+- **Contracts:** `contracts/src/SealedBidAuction.compact` with 5 circuits (`commit_bid`, `reveal_bid`, `verify_reserve`, `settle_auction`, `verify_auction` + `public_key`) and ledger state (`auction_state: AuctionState`, `bid_commitments: Map<Bytes32,BidCommitment>`, `refunds: Map<Bytes32,RefundInfo>`)
+- **Rust shim:** `contracts/src/lib.rs` embeds the compact source via `build.rs` (`OUT_DIR/compact_source.rs`) and exposes it with `wasm-bindgen`
+- **SDK:** `sdk/src/index.ts` (`MidnightAuctionSDK` with `createAuction`, `placeBid`, `revealBid`, `settleAuction`, `verifyAuction`, `onAuctionSettled`) and `sdk/src/circuits.ts` wrappers
+- **Frontend:** `marketplace-fork/src/hooks/useSealedBidAuction.ts` and `marketplace-fork/src/components/SealedBidAuctionUI.tsx`
+- **Demo:** `demo/demo-script.md` — a 3-minute flow from sealed bids to ZK solvency to anti-sniping to private reserve to Vickrey to auto refunds
 
-```text
-contracts/src/SealedBidAuction.compact  ← 5 circuits
-  commit_bid / reveal_bid / verify_reserve / settle_auction / verify_auction (+public_key)
-  Ledger: auction_state: AuctionState, nft_contract, seller, min_bid, reserve_commitment,
-          bid_commitments: Map<Bytes32,BidCommitment>, refunds: Map<Bytes32,RefundInfo>
+Build flow:
 
-contracts/src/lib.rs  ← shim: include!(OUT_DIR/compact_source.rs) + wasm_bindgen
-sdk/src/              ← MidnightAuctionSDK
-  index.ts: createAuction / placeBid / revealBid / settleAuction / verifyAuction / onAuctionSettled
-  circuits.ts: AuctionCircuits wrappers (commitBid, revealBid, verifyReserve…)
-  types/midnight-js-sdk.d.ts: stub for private @midnight-ntwrk/midnight-js-sdk (skipLibCheck)
-marketplace-fork/src/ ← useSealedBidAuction(sdk, auctionId) + SealedBidAuctionUI.tsx
-demo/demo-script.md    ← 3-min flow: sealed bids → ZK solvency → anti-sniping → private reserve → Vickrey → auto refunds
-```
+1. **Create:** seller calls `disclose(nftContract)` and stores `hash(reserve)`, sets `auction_state = active`, emits `AuctionCreated`
+2. **Commit:** bidder generates `salt \leftarrow rand(32)`, proves `balance \geq amount` in ZK, computes $C$, then `disclose(C)` and inserts `BidCommitment{revealed:false}` 
+3. **Reveal:** bidder discloses $C, amount, salt$; circuit checks $H(amount' \parallel salt') == C$, then the contract rebuilds `BidCommitment{revealed:true, bid_amount:amount}` 
+4. **Settle:** `settle_auction` computes `SettlementOutput{winner, winningBid, secondHighestBid}`, `verify_reserve` checks the reserve, emits `AuctionSettled`, sets `auction_settled=true`
 
-**Flow:**
+Anti-sniping: if a bid lands in $[deadline-60s, deadline]$ then $deadline += 60s$ and `auction_extended=true`.
 
-1. **Create:** seller `disclose(nftContract)` + `hash(reserve)` → `auction_state = active`, emit `AuctionCreated`
-2. **Commit:** bidder generates `salt ← rand(32)`, proves `balance ≥ amount` (ZK), computes $C$, `disclose(C)` → `bid_commitments.insert(C, BidCommitment{..., revealed:false})` + `auction_bid_commitments.insert(C, auctionId)`
-3. **Reveal:** `disclose(C, amount, salt)` → `reveal_bid(amount,salt,C)==true` → reconstruct `BidCommitment{revealed:true, bid_amount: amount}` and re-insert, emit `BidRevealed`
-4. **Settle:** `settle_auction(empty_bids, minBid, auctionType, reserveCommitment, reserveSalt)` → `SettlementOutput{winner, winningBid, secondHighestBid}`, `verify_reserve` → emit `AuctionSettled`, `auction_settled=true`, `auction_state=settled`
+## Challenges I Faced
 
-Anti-sniping: if `now ∈ [deadline-60s, deadline]` then `deadline += 60s` and `auction_extended=true`.
+**Compact disclosure hell.** The first compile threw 18× `potential witness-value disclosure must be declared`. Every ledger write needed `disclose(param)`, every `assert` needed a message (`assert(!auction_settled, "Auction already settled")`), and `Map.lookup` returns a copy — mutating `bid.revealed = true` is illegal for `const`, so I had to rebuild the whole struct.
 
----
+**Cargo vs Compact.** `Cargo.toml` had `path = "src/SealedBidAuction.compact"` — Cargo expects Rust `lib.rs`. I fixed it to the default `src/lib.rs` shim and bumped dependencies to match the lockfile (`blake3 1.8`, `borsh 1.8`, `midnight-circuits 7.2`).
 
-## Challenges We Faced
+**WASM on macOS.** `cargo build --target wasm32-wasip1 --release` fails with `blst: error: unable to create target wasm32-unknown-wasip1` because Apple clang lacks the WASI sysroot. Native `cargo build --release` still passes and proves the API is correct; WASM needs `wasi-sdk` or Midnight’s docker builder.
 
-**Compact disclosure hell.** First compile: 18× `potential witness-value disclosure must be declared`. Every ledger write needed `disclose(param)`. `assert(!auction_settled)` needed a message: `assert(!auction_settled, "Auction already settled")`. `Map.lookup` returns a copy — mutating `bid.revealed = true` is illegal for `const`; we had to rebuild the whole `BidCommitment` struct.
+**Private npm.** `@midnight-ntwrk/midnight-js-sdk@^0.3.0` returns 404 on the public registry. I stubbed it in `src/types/midnight-js-sdk.d.ts` and set `tsconfig.json` to `module:NodeNext` / `moduleResolution:NodeNext` with `skipLibCheck:true`, and fixed a `bigint` bug (`bucket + 1` → `bucket + 1n`).
 
-**Cargo path vs Compact.** `Cargo.toml` had `path = "src/SealedBidAuction.compact"` — `cargo` expects Rust `lib.rs`. Fixed to default `src/lib.rs` with a shim that embeds the compact source via `build.rs` (`OUT_DIR/compact_source.rs`), and bumped deps to lock versions (`blake3 1.8`, `borsh 1.8`).
-
-**WASM vs native.** `cargo build --target wasm32-wasip1 --release` fails on macOS: `blst: error: unable to create target wasm32-unknown-wasip1` — Apple clang lacks WASI sysroot. Native `cargo build --release` passes and proves API correctness; WASM needs `wasi-sdk` or Midnight’s docker `compact-builder`.
-
-**Private npm.** `@midnight-ntwrk/midnight-js-sdk@^0.3.0` is 404 on public npm. Stubbed it in `src/types/midnight-js-sdk.d.ts` and set `tsconfig.json` to `module:NodeNext`/`moduleResolution:NodeNext` + `skipLibCheck:true`. Also fixed a `bigint` bug: `bucket + 1` → `bucket + 1n` at `index.ts:465`.
-
-**Build artifacts in git.** First push included `contracts/target/` (900+ files). Added `.gitignore` (`/target/`, `**/target/`, `Cargo.lock`, `node_modules/`, `sdk/dist/`, `.DS_Store`, `*.key`) and `git rm -r --cached contracts/target`, re-pushed clean.
-
----
+**Git hygiene.** The first push included `contracts/target/` with 900+ files. I added `.gitignore` for `/target/`, `node_modules`, `sdk/dist`, `.DS_Store`, and `*.key`, then ran `git rm -r --cached contracts/target` for a clean history.
 
 ## What's Next
 
-* Real ZK circuits for `commit_bid`/`verify_reserve` with `midnight-zk-stdlib` range proofs, Merkle eligibility (`bidder_eligibility_root`), and encrypted refunds
-* On-chain art: Vickrey analytics in ZK (`avg`, `bidsAboveReserve` without revealing distribution)
-* Midnight testnet deploy + marketplace relayer that verifies `AuctionSettled` and calls `marketplace_transfer_nft`
+- Replace stubs with real `midnight-zk-stdlib` range and Merkle proofs for eligibility (`bidder_eligibility_root`) and encrypted refunds
+- Add ZK analytics for Vickrey stats (`avg`, `bidsAboveReserve`) without revealing the distribution
+- Deploy to Midnight testnet and wire the marketplace relayer to verify `AuctionSettled` and call `marketplace_transfer_nft`
 
-> MidnightShield brings **fairness without exposure** — the chain sees hashes and proofs, not wallets and numbers. That’s what auction fairness looks like when you don’t have to choose between privacy and verifiability.
+> MidnightShield brings fairness without exposure — the chain sees only hashes and proofs, not wallets and numbers. That is what auction fairness looks like when you don’t have to choose between privacy and verifiability.
 
-**Repo:** `balajiharish75/midnight-shield` (private) • **Verified:** `compact compile` (5 circuits) • `cargo build --release 0.04s` • `tsc --noEmit 0` • `git status clean`
