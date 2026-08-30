@@ -8,69 +8,68 @@
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
   *{box-sizing:border-box}
   body{margin:0;background:#f6f6f7;color:#0f0f12;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
-  /* header - human marketplace style, not AI gradient */
   header{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid #e5e5e5;display:flex;align-items:center;gap:18px;padding:12px 20px}
-  .logo{font-weight:800;letter-spacing:-.02em;font-size:18px;display:flex;align-items:center;gap:8px}
+  .logo{font-weight:800;letter-spacing:-.02em;font-size:18px;display:flex;align-items:center;gap:8px;cursor:pointer}
   .logo i{width:26px;height:26px;border-radius:7px;background:#0f0f12;color:#fff;display:grid;place-items:center;font-size:13px;font-style:normal}
   nav{display:flex;gap:18px;font-size:13px;font-weight:500;color:#3f3f46}
-  nav a{color:inherit;text-decoration:none} nav a:hover{color:#111}
+  nav a{color:inherit;text-decoration:none;padding:4px 0;border-bottom:2px solid transparent} nav a.active{color:#0f0f12;border-color:#0f0f12} nav a:hover{color:#111}
   .search{margin-left:auto;flex:0 1 360px;position:relative}
-  .search input{width:100%;background:#f4f4f5;border:1px solid #e4e4e7;border-radius:10px;padding:9px 12px 9px 34px;font-size:13px}
+  .search input{width:100%;background:#f4f4f5;border:1px solid #e4e4e7;border-radius:10px;padding:9px 12px 9px 34px;font-size:13px;outline:none}
+  .search input:focus{border-color:#0f0f12;background:#fff}
   .search span{position:absolute;left:10px;top:9px;color:#71717a;font-size:13px}
-  .wallet{background:#0f0f12;color:#fff;border:0;border-radius:10px;padding:9px 14px;font-weight:600;font-size:13px;cursor:pointer}
-  .wallet:hover{opacity:.9}
-  /* page */
+  .wallet{background:#0f0f12;color:#fff;border:0;border-radius:10px;padding:9px 14px;font-weight:600;font-size:13px;cursor:pointer;transition:.15s}
+  .wallet:hover{opacity:.88} .wallet.connected{background:#fff;color:#0f0f12;border:1px solid #0f0f12}
   .wrap{max-width:1160px;margin:0 auto;padding:22px 20px}
   .crumbs{font-size:12px;color:#71717a;margin-bottom:12px}
   .crumbs a{color:#71717a;text-decoration:none}
   .title{font-size:28px;font-weight:700;letter-spacing:-.02em;margin:4px 0 6px}
-  .meta{display:flex;gap:10px;align-items:center;font-size:13px;color:#52525b}
+  .meta{display:flex;gap:10px;align-items:center;font-size:13px;color:#52525b;flex-wrap:wrap}
   .meta .owner{display:flex;align-items:center;gap:6px}
   .avatar{width:20px;height:20px;border-radius:50%;background:#e4e4e7;display:grid;place-items:center;font-size:10px}
   .verified{width:14px;height:14px;border-radius:50%;background:#0ea5e9;color:#fff;display:grid;place-items:center;font-size:9px}
-  /* layout */
   .grid{display:grid;grid-template-columns:1.15fr .85fr;gap:20px;margin-top:18px}
   @media(max-width:900px){.grid{grid-template-columns:1fr} .search{display:none}}
   .card{background:#fff;border:1px solid #e4e4e7;border-radius:16px;overflow:hidden}
   .media{aspect-ratio:4/3;background:#0a0a0f;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
   .media img{width:100%;height:100%;object-fit:cover}
-  .media .hint{position:absolute;bottom:10px;left:10px;background:rgba(255,255,255,.9);backdrop-filter:blur(6px);border-radius:8px;padding:6px 8px;font-size:11px;font-weight:600}
+  .media .hint{position:absolute;bottom:10px;left:10px;background:rgba(255,255,255,.92);backdrop-filter:blur(6px);border-radius:8px;padding:6px 8px;font-size:11px;font-weight:600}
   .pad{padding:16px}
   .row{display:flex;justify-content:space-between;align-items:center}
   .label{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#71717a}
   .val{font-size:14px;font-weight:600}
   .mono{font-family:JetBrains Mono,ui-monospace,monospace;font-size:11px;color:#3f3f46}
   .divider{height:1px;background:#f4f4f5;margin:12px 0}
-  /* bid panel */
   .timer{border:1px solid #fde68a;background:#fffbeb;border-radius:12px;padding:10px 12px;display:flex;justify-content:space-between;align-items:center}
   .timer strong{font-size:13px} .timer small{color:#92400e;font-weight:500}
-  .btn{width:100%;border:0;border-radius:12px;padding:12px;font-weight:700;font-size:14px;cursor:pointer}
-  .btn-primary{background:#0f0f12;color:#fff} .btn-primary:hover{background:#1a1a1e}
-  .btn-ghost{background:#fff;border:1px solid #e4e4e7;color:#0f0f12} .btn-ghost:hover{background:#fafafa}
+  .btn{width:100%;border:0;border-radius:12px;padding:12px;font-weight:700;font-size:14px;cursor:pointer;transition:.15s}
+  .btn-primary{background:#0f0f12;color:#fff} .btn-primary:hover{background:#1f1f23} .btn-primary:disabled{opacity:.45;cursor:not-allowed}
+  .btn-ghost{background:#fff;border:1px solid #e4e4e7;color:#0f0f12} .btn-ghost:hover{background:#fafafa} .btn-ghost:disabled{opacity:.45;cursor:not-allowed}
   .helper{font-size:11px;color:#71717a;margin-top:8px;line-height:1.4}
   .pill{display:inline-flex;align-items:center;gap:6px;background:#f4f4f5;border-radius:20px;padding:6px 10px;font-size:11px;font-weight:600;color:#18181b}
   .dot{width:6px;height:6px;border-radius:50%;background:#10b981}
-  /* activity */
   .item{display:flex;gap:10px;padding:10px 0;border-bottom:1px solid #f4f4f5}
   .item:last-child{border:0}
   .item .ic{width:32px;height:32px;border-radius:50%;background:#f4f4f5;display:grid;place-items:center;font-size:13px;flex:0 0 32px}
   .item .who{font-size:13px;font-weight:600} .item .sub{font-size:12px;color:#71717a}
   .zk{background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;padding:8px 10px;font-size:11px;color:#14532d}
-  /* subtle human touches: slight rotation on badge, handwritten note */
-  .hand{font-family:Inter,sans-serif;font-size:11px;color:#71717a;transform:rotate(-0.6deg)}
   .note{border-left:3px solid #0f0f12;padding:8px 10px;background:#fafafa;border-radius:0 10px 10px 0;font-size:11px;color:#3f3f46}
+  #toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#0f0f12;color:#fff;border-radius:10px;padding:12px 16px;font-size:13px;display:none;max-width:90%;z-index:50;box-shadow:0 10px 30px rgba(0,0,0,.3)}
+  .explore-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:12px}
+  @media(max-width:700px){.explore-grid{grid-template-columns:1fr}}
+  .explore-card{border:1px solid #e4e4e7;border-radius:12px;padding:12px;background:#fff;cursor:pointer}
+  .explore-card:hover{border-color:#0f0f12}
 </style>
 </head>
 <body>
 <header>
-  <div class="logo"><i>◐</i> MidnightShield</div>
-  <nav><a href="#">Explore</a><a href="#" style="color:#0f0f12;text-underline-offset:4px;text-decoration:underline">Auctions</a><a href="#">Create</a></nav>
-  <div class="search"><span>⌕</span><input placeholder="Search collections, NFTs, users"></div>
-  <button class="wallet" onclick="alert('Connect wallet — Midnight Lace (simulated)')">Connect • 0x9f3a…4b2c</button>
+  <div class="logo" onclick="navigate('auctions')"><i>◐</i> MidnightShield</div>
+  <nav><a href="#" id="nav-explore" onclick="navigate('explore');return false">Explore</a><a href="#" id="nav-auctions" class="active" onclick="navigate('auctions');return false">Auctions</a><a href="#" id="nav-create" onclick="navigate('create');return false">Create</a></nav>
+  <div class="search"><span>⌕</span><input id="searchInput" placeholder="Search collections, NFTs, users" oninput="handleSearch(this.value)"></div>
+  <button class="wallet" id="walletBtn" onclick="toggleWallet()">Connect • 0x9f3a…4b2c</button>
 </header>
 
-<div class="wrap">
-  <div class="crumbs"><a href="#">Explore</a> › <a href="#">Photography</a> › <a href="#">Midnight Shield — Genesis</a></div>
+<div class="wrap" id="page-auctions">
+  <div class="crumbs"><a href="#" onclick="navigate('explore');return false">Explore</a> › <a href="#">Photography</a> › Midnight Shield — Genesis</div>
   <div class="title">Midnight Shield Art — Genesis #1</div>
   <div class="meta">
     <span class="owner"><span class="avatar">H</span> harish_0075 <span class="verified">✓</span> • Seller</span>
@@ -79,7 +78,6 @@
   </div>
 
   <div class="grid">
-    <!-- LEFT: media + details -->
     <div>
       <div class="card">
         <div class="media">
@@ -91,25 +89,22 @@
           <div class="row"><span class="val" style="font-size:13px">Midnight Shield Genesis</span><span class="mono">Field · #1</span></div>
           <div class="divider"></div>
           <div class="row"><span class="label">Min bid</span><span class="label">Reserve</span><span class="label">Bids</span></div>
-          <div class="row"><span class="val">1,000 DUST</span><span class="val" style="color:#71717a">hidden</span><span class="val">3 committed • 2 revealed</span></div>
+          <div class="row"><span class="val">1,000 DUST</span><span class="val" style="color:#71717a" id="reserveDisplay">hidden</span><span class="val" id="bidsCount">3 committed • 2 revealed</span></div>
           <div class="helper">Seller committed <code>hash(reserve || salt)</code> — bidders never see reserve, only <code>reserveMet</code> after settle.</div>
           <div class="divider"></div>
           <div class="label" style="margin-bottom:6px">About</div>
           <div style="font-size:13px;line-height:1.5;color:#27272a">Privacy-preserving sealed-bid auction. ZK solvency proofs, Vickrey pricing, anti-sniping + auto refunds. Built with Compact 0.5.2 • 5 ZK circuits.</div>
-          <div class="hand" style="margin-top:10px">— not a floor price leak. chain sees <span class="mono">0x9f3a…</span> + proof ✓</div>
+          <div class="helper" style="margin-top:10px">— not a floor price leak. chain sees <span class="mono">0x9f3a…</span> + proof ✓</div>
         </div>
       </div>
 
       <div class="card" style="margin-top:16px;padding:14px">
-        <div class="label">Bid history (privacy-preserving)</div>
-        <div class="item"><div class="ic">◎</div><div><div class="who">You <span style="font-weight:400;color:#71717a">• 2m ago</span></div><div class="sub">Committed <b>4,200 DUST</b> — hidden • <span class="mono">0x9f3a…4b2c</span></div></div><span class="pill">hidden</span></div>
-        <div class="item"><div class="ic">◯</div><div><div class="who">0x71…8a9f <span style="font-weight:400;color:#71717a">• 8m ago</span></div><div class="sub">Committed • <span class="mono">0x71…8a9f</span></div></div><span class="pill">hidden</span></div>
-        <div class="item"><div class="ic">●</div><div><div class="who">0x3c…b1d4 <span style="font-weight:400;color:#71717a">• 14m ago</span></div><div class="sub">Revealed • verified</div></div><span class="pill" style="background:#e0f2fe;color:#0c4a6e">revealed</span></div>
-        <div class="zk" style="margin-top:8px">ZK solvency proof <b>✓ verified</b> — proves <span class="mono">balance ≥ amount</span> without revealing balance.</div>
+        <div class="row"><span class="label">Bid history (privacy-preserving)</span><span class="label" style="text-transform:none;font-weight:400;color:#4f46e5;cursor:pointer" onclick="refreshHistory()">Refresh ↻</span></div>
+        <div id="bidHistory"></div>
+        <div class="zk" style="margin-top:8px" id="zkBox">ZK solvency proof <b>✓ verified</b> — proves <span class="mono">balance ≥ amount</span> without revealing balance.</div>
       </div>
     </div>
 
-    <!-- RIGHT: bid panel + activity -->
     <div>
       <div class="card pad">
         <div class="row"><span class="label">Current status</span><span class="pill"><span class="dot"></span> Live auction • Vickrey</span></div>
@@ -122,21 +117,21 @@
           <span style="align-self:center;font-size:12px;color:#71717a;font-weight:600">DUST</span>
         </div>
         <div class="helper">Amount stays private. A random <span class="mono">salt</span> is generated locally and never shared.</div>
-        <button class="btn btn-primary" style="margin-top:10px" onclick="placeBid()">Place Sealed Bid — disclose(hash)</button>
-        <button class="btn btn-ghost" style="margin-top:8px" onclick="reveal()">Reveal (after deadline)</button>
-        <div class="helper">Chain sees only <span class="mono">0x9f3a…</span> + ZK proof. Amount + salt stay in your browser.</div>
+        <button class="btn btn-primary" id="placeBtn" style="margin-top:10px" onclick="placeBid()">Place Sealed Bid — disclose(hash)</button>
+        <button class="btn btn-ghost" id="revealBtn" style="margin-top:8px" onclick="revealBid()">Reveal (after deadline)</button>
+        <div class="helper">Chain sees only <span class="mono" id="lastCommit">0x9f3a…</span> + ZK proof. Amount + salt stay in your browser.</div>
         <div class="note" style="margin-top:12px"><b>How it works:</b> <span class="mono">C = H(amount || salt || nft || deadline)</span> → <span class="mono">disclose(C)</span>. Reveal checks <span class="mono">H(amount' || salt') == C</span>.</div>
-        <div id="toast" style="display:none;margin-top:10px;background:#0f0f12;color:#fff;border-radius:10px;padding:10px;font-size:12px"></div>
       </div>
 
       <div class="card pad" style="margin-top:16px">
         <div class="row"><span class="label">Settlement</span><span class="label" style="color:#0f0f12">Vickrey</span></div>
         <div style="font-size:13px;margin-top:8px">Winner pays <b>second-highest</b> bid — honest bidding is rational.</div>
         <div style="display:flex;gap:8px;margin-top:10px">
-          <div style="flex:1;background:#f4f4f5;border-radius:10px;padding:10px;text-align:center"><div style="font-size:11px;color:#71717a">If you win at 4,200</div><div style="font-weight:700">Pay 4,200 → actually 4,200? No — pay 3,800 if second is 3,800</div></div>
+          <div style="flex:1;background:#f4f4f5;border-radius:10px;padding:10px;text-align:center"><div style="font-size:11px;color:#71717a">If you win at 4,200</div><div style="font-weight:700" id="vickreyPreview">Pay 4,200 → actually 3,800 if second is 3,800</div></div>
         </div>
-        <button class="btn btn-ghost" style="margin-top:10px" onclick="settle()">Settle (seller only, after reveal)</button>
+        <button class="btn btn-ghost" style="margin-top:10px" id="settleBtn" onclick="settleAuction()">Settle (seller only, after reveal)</button>
         <div class="helper">Settle computes <span class="mono">winner = argmax(b_i), price = b_(2)</span> in ZK, verifies <span class="mono">winningBid ≥ reserve</span>, emits <span class="mono">AuctionSettled</span>, auto-refunds losers.</div>
+        <div id="settleResult" style="display:none;margin-top:10px;border-radius:10px;padding:10px;font-size:13px"></div>
       </div>
 
       <div class="card pad" style="margin-top:16px">
@@ -148,25 +143,208 @@
   </div>
 </div>
 
+<div class="wrap" id="page-explore" style="display:none">
+  <h2 style="font-size:22px">Explore Collections</h2>
+  <div class="explore-grid" id="exploreGrid"></div>
+  <p class="helper">Search filters live — try “Midnight”, “Genesis”, “Vickrey”.</p>
+</div>
+
+<div class="wrap" id="page-create" style="display:none;max-width:640px">
+  <h2>Create Auction</h2>
+  <div class="card pad">
+    <label class="label">NFT Contract</label><input id="createContract" placeholder="0x..." value="0xMidnightShieldGenesis" style="width:100%;padding:10px;border:1px solid #e4e4e7;border-radius:10px;margin:6px 0 12px">
+    <label class="label">Min Bid (DUST)</label><input id="createMin" type="number" placeholder="1000" value="1000" style="width:100%;padding:10px;border:1px solid #e4e4e7;border-radius:10px;margin:6px 0 12px">
+    <label class="label">Reserve (hidden) (DUST)</label><input id="createReserve" type="number" placeholder="3000" value="3000" style="width:100%;padding:10px;border:1px solid #e4e4e7;border-radius:10px;margin:6px 0 12px">
+    <label class="label">Duration (seconds)</label><input id="createDuration" type="number" placeholder="3600" value="3600" style="width:100%;padding:10px;border:1px solid #e4e4e7;border-radius:10px;margin:6px 0 12px">
+    <label class="label">Pricing</label><select id="createType" style="width:100%;padding:10px;border:1px solid #e4e4e7;border-radius:10px;margin:6px 0 12px"><option value="0">First-price</option><option value="1" selected>Vickrey (second-price)</option></select>
+    <button class="btn btn-primary" onclick="createAuction()">Create Sealed-Bid Auction</button>
+    <div id="createResult" class="helper"></div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
 <script>
-// tiny human interactions — no AI glare
-let sec = 47;
+// --- state ---
+let wallet = localStorage.getItem('ms-wallet') || null;
+let bids = JSON.parse(localStorage.getItem('ms-bids') || '[]');
+if(bids.length===0){
+  bids = [
+    {bidder:'0x71…8a9f', amount:0, commitment:'0x71…8a9f', salt:'', revealed:false, ts: Date.now()-8*60000},
+    {bidder:'0x3c…b1d4', amount:3800, commitment:'0x3cb1…d4e8', salt:'0xSalt3c', revealed:true, ts: Date.now()-14*60000},
+  ];
+  saveBids();
+}
+let auction = JSON.parse(localStorage.getItem('ms-auction') || 'null') || {
+  nftContract:'0xMidnightShieldGenesis', tokenId:1, minBid:1000, reserve:3000, reserveHidden:true, duration:3600, type:1, createdAt: Date.now(), bids:3, revealed:2
+};
+function saveBids(){ localStorage.setItem('ms-bids', JSON.stringify(bids)); }
+function saveAuction(){ localStorage.setItem('ms-auction', JSON.stringify(auction)); }
+function saveWallet(){ if(wallet) localStorage.setItem('ms-wallet', wallet); }
+
+// --- wallet ---
+function updateWalletUI(){
+  const btn=document.getElementById('walletBtn');
+  if(wallet){ btn.textContent = 'Connected • ' + wallet.slice(0,6)+'…'+wallet.slice(-4); btn.classList.add('connected'); }
+  else { btn.textContent = 'Connect • 0x9f3a…4b2c'; btn.classList.remove('connected'); }
+}
+function toggleWallet(){
+  if(wallet){
+    if(confirm('Disconnect '+wallet+'?')){ wallet=null; localStorage.removeItem('ms-wallet'); updateWalletUI(); toast('Wallet disconnected','info'); }
+  } else {
+    const r = '0x'+Array.from(crypto.getRandomValues(new Uint8Array(4))).map(b=>b.toString(16).padStart(2,'0')).join('')+'…'+Array.from(crypto.getRandomValues(new Uint8Array(4))).map(b=>b.toString(16).padStart(2,'0')).join('');
+    wallet = r; saveWallet(); updateWalletUI(); toast('Connected '+wallet+' — Midnight Lace (simulated)','success');
+  }
+  renderHistory();
+}
+updateWalletUI();
+
+// --- navigation ---
+function navigate(page){
+  document.getElementById('page-auctions').style.display = page==='auctions'?'block':'none';
+  document.getElementById('page-explore').style.display = page==='explore'?'block':'none';
+  document.getElementById('page-create').style.display = page==='create'?'block':'none';
+  document.querySelectorAll('nav a').forEach(a=>a.classList.remove('active'));
+  document.getElementById('nav-'+page)?.classList.add('active');
+  if(page==='explore') renderExplore();
+}
+function handleSearch(q){
+  if(!q) { renderExplore(); return; }
+  const grid=document.getElementById('exploreGrid');
+  const cards=[...grid.children];
+  cards.forEach(c=>{
+    const txt=c.textContent.toLowerCase();
+    c.style.display = txt.includes(q.toLowerCase()) ? 'block':'none';
+  });
+  if(document.getElementById('page-explore').style.display==='none') navigate('explore');
+}
+function renderExplore(){
+  const data=[
+    {name:'Midnight Shield Genesis #1', col:'Genesis', price:'1,000 DUST', tag:'Sealed-bid • Vickrey', mine:true},
+    {name:'Midnight Cats #42', col:'Midnight Cats', price:'800 DUST', tag:'First-price'},
+    {name:'ZK Punks #7', col:'ZK Punks', price:'2,200 DUST', tag:'Sealed-bid'},
+  ];
+  const grid=document.getElementById('exploreGrid');
+  grid.innerHTML = data.map(d=>`
+    <div class="explore-card" onclick="navigate('auctions');toast('Opened ${d.name}','info')">
+      <div style="height:90px;background:#0a0a0f;border-radius:8px;display:grid;place-items:center;color:#fff;font-weight:700">${d.name.split(' ')[0]}</div>
+      <div style="font-weight:600;margin-top:8px">${d.name}</div>
+      <div style="font-size:12px;color:#71717a">${d.col} • ${d.tag}</div>
+      <div style="font-size:12px;font-weight:600;margin-top:4px">${d.price} ${d.mine?'<span style=\'color:#0ea5e9\'>(yours)</span>':''}</div>
+    </div>
+  `).join('');
+}
+
+// --- history ---
+function renderHistory(){
+  const el=document.getElementById('bidHistory');
+  // merge stored bids + mock
+  const all = [...bids].sort((a,b)=>b.ts-a.ts);
+  // add current user's committed if any
+  el.innerHTML = all.map(b=>{
+    const isYou = wallet && b.bidder===wallet;
+    const when = Math.round((Date.now()-b.ts)/60000)+'m ago';
+    const amountText = b.revealed ? `${b.amount} DUST — revealed` : `${b.amount?b.amount+' DUST — hidden': 'hidden'} • ${b.commitment}`;
+    const pill = b.revealed ? '<span class="pill" style="background:#e0f2fe;color:#0c4a6e">revealed</span>' : '<span class="pill">hidden</span>';
+    const icon = b.revealed ? '●' : '◯';
+    if(isYou) return `<div class="item"><div class="ic">◎</div><div><div class="who">You • ${when}</div><div class="sub">Committed <b>${b.amount||'—'} DUST</b> — hidden • <span class="mono">${b.commitment}</span></div></div>${pill}</div>`;
+    return `<div class="item"><div class="ic">${icon}</div><div><div class="who">${b.bidder} • ${when}</div><div class="sub">${b.revealed?'Revealed • verified':'Committed •'} <span class="mono">${b.commitment}</span></div></div>${pill}</div>`;
+  }).join('') || '<div class="helper">No bids yet.</div>';
+  document.getElementById('bidsCount').textContent = `${bids.length} committed • ${bids.filter(b=>b.revealed).length} revealed`;
+  // update wallet related button states
+  const hasHidden = wallet && bids.some(b=>b.bidder===wallet && !b.revealed);
+  document.getElementById('revealBtn').disabled = !hasHidden;
+  document.getElementById('revealBtn').style.opacity = hasHidden? '1':'.45';
+  // vickrey preview: find second highest revealed
+  const revealed = bids.filter(b=>b.revealed).map(b=>b.amount).sort((a,b)=>b-a);
+  if(revealed.length>=2) document.getElementById('vickreyPreview').textContent = `Pay ${revealed[0]} → actually ${revealed[1]} if second is ${revealed[1]}`;
+  const last = wallet? bids.find(b=>b.bidder===wallet) : null;
+  if(last) document.getElementById('lastCommit').textContent = last.commitment;
+}
+renderHistory();
+
+// --- place bid ---
+function placeBid(){
+  if(!wallet){ toast('Connect wallet first','error'); toggleWallet(); return; }
+  const amtEl=document.getElementById('bidAmount');
+  const amt = BigInt(amtEl.value || 0);
+  if(amt < BigInt(auction.minBid)){ toast(`Bid must be ≥ ${auction.minBid} DUST`,'error'); return; }
+  // anti-spam: deadline check (simulated 47s left)
+  const salt = '0x'+Array.from(crypto.getRandomValues(new Uint8Array(16))).map(b=>b.toString(16).padStart(2,'0')).join('');
+  const commitment = '0x'+Array.from(crypto.getRandomValues(new Uint8Array(4))).map(b=>b.toString(16).padStart(2,'0')).join('')+'…'+salt.slice(2,6);
+  // simulate disclose(C) + ZK proof
+  bids.unshift({bidder:wallet, amount:Number(amt), commitment, salt, revealed:false, ts: Date.now()});
+  saveBids();
+  renderHistory();
+  toast(`Sealed bid ${amt} DUST committed: disclose(H(${amt}||salt)) → ${commitment} — chain sees only hash + ZK proof ✓`,'success');
+  amtEl.value='';
+  // anti-sniping extend
+  sec = 107; // extend to 01:47
+  document.querySelector('.timer').style.borderColor='#10b981';
+  setTimeout(()=>document.querySelector('.timer').style.borderColor='#fde68a',2000);
+}
+function revealBid(){
+  if(!wallet) return toast('Connect wallet first','error');
+  const my = bids.find(b=>b.bidder===wallet && !b.revealed);
+  if(!my) return toast('No hidden commitment to reveal','error');
+  my.revealed = true;
+  saveBids(); renderHistory();
+  toast(`Revealed ${my.amount} DUST: disclose(${my.commitment}, ${my.amount}, salt) → reveal_bid==true ✓`,'success');
+}
+function settleAuction(){
+  const revealed = bids.filter(b=>b.revealed);
+  if(revealed.length===0) return toast('No revealed bids to settle','error');
+  // check if wallet is seller (harish_0075) — for demo allow anyone but show check
+  // compute Vickrey
+  revealed.sort((a,b)=>b.amount-a.amount);
+  const winner = revealed[0];
+  const price = auction.type===1 && revealed[1] ? revealed[1].amount : winner.amount;
+  const reserveMet = winner.amount >= auction.reserve;
+  const res = document.getElementById('settleResult');
+  res.style.display='block';
+  res.style.background = reserveMet ? '#f0fdf4' : '#fef2f2';
+  res.style.border='1px solid '+(reserveMet?'#bbf7d0':'#fecaca');
+  res.style.color = reserveMet? '#14532d':'#7f1d1d';
+  if(!reserveMet){
+    res.innerHTML = `Reserve NOT met: winning ${winner.amount} < reserve ${auction.reserve} — auction failed, all refunded.`;
+    document.getElementById('reserveDisplay').textContent = auction.reserve+' (not met)';
+  } else {
+    res.innerHTML = `Settled ✓ Winner <b>${winner.bidder}</b> (${winner.amount} DUST) pays <b>${price} DUST</b> ${auction.type===1?'(Vickrey b_(2))':'(first-price)'}<br>Losers auto-refunded. Emitted <span class="mono">AuctionSettled</span>.`;
+    document.getElementById('reserveDisplay').textContent = auction.reserve+' (met ✓)';
+  }
+  toast(reserveMet ? `Settled: winner ${winner.bidder} pays ${price}` : 'Settled: reserve not met','success');
+}
+function createAuction(){
+  const c=document.getElementById('createContract').value.trim()||'0xNew';
+  const min=parseInt(document.getElementById('createMin').value)||1000;
+  const res=parseInt(document.getElementById('createReserve').value)||3000;
+  const dur=parseInt(document.getElementById('createDuration').value)||3600;
+  const typ=parseInt(document.getElementById('createType').value);
+  auction = {nftContract:c, tokenId:2, minBid:min, reserve:res, reserveHidden:true, duration:dur, type:typ, createdAt:Date.now()};
+  saveAuction();
+  document.getElementById('createResult').textContent = `Created ${c} #2 — min ${min}, reserve hidden (${res}), ${typ===1?'Vickrey':'first-price'}, ${dur}s — disclose(nft) stored.`;
+  toast(`Auction created: ${c} — min ${min} DUST, reserve hidden`,'success');
+  setTimeout(()=>navigate('auctions'),600);
+}
+function toast(msg, type='info'){
+  const el=document.getElementById('toast');
+  el.textContent=msg;
+  el.style.background = type==='error' ? '#7f1d1d' : '#0f0f12';
+  el.style.display='block';
+  clearTimeout(el._t);
+  el._t=setTimeout(()=>el.style.display='none',3500);
+}
+// countdown
+let sec=47;
 setInterval(()=>{
   sec = sec<=0? 47: sec-1;
-  const m = String(Math.floor(sec/60)).padStart(2,'0');
-  const s = String(sec%60).padStart(2,'0');
-  document.getElementById('countdown').textContent = `00:${s}`;
-  document.getElementById('timer').innerHTML = `00:${String(s).padStart(2,'0')} → 01:${String(s).padStart(2,'0')}<br><small>anti-sniping extended +60s</small>`;
+  const m=String(Math.floor(sec/60)).padStart(2,'0');
+  const s=String(sec%60).padStart(2,'0');
+  const c=document.getElementById('countdown');
+  if(c) c.textContent=`00:${s}`;
+  const t=document.getElementById('timer');
+  if(t) t.innerHTML=`00:${String(s).padStart(2,'0')} → 01:${String(s).padStart(2,'0')}<br><small>anti-sniping extended +60s</small>`;
 },1000);
-function placeBid(){
-  const v = document.getElementById('bidAmount').value || '4,200';
-  const toast = document.getElementById('toast');
-  toast.style.display='block';
-  toast.textContent = `Sealed! disclose(H(${v} || salt || nft || deadline)) → 0x9f3a…4b2c (hidden). ZK solvency proof ✓ — chain sees only hash + proof.`;
-  setTimeout(()=>toast.style.display='none', 4000);
-}
-function reveal(){ alert('Reveal: disclose(C, amount, salt) → reveal_bid(amount,salt,C)==true → BidCommitment{revealed:true} (simulated)'); }
-function settle(){ alert('Settle: verify_reserve + settle_auction → winner pays b_(2) (Vickrey) — losers auto-refunded (simulated)'); }
 </script>
 </body>
 </html>
