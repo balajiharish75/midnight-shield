@@ -121,7 +121,7 @@
           <div class="divider"></div>
           <div class="label" style="margin-bottom:6px">About this auction — handmade</div>
           <div style="font-size:13px;line-height:1.6;color:#27272a">A privacy-preserving sealed-bid auction. Every bid is a ZK-commitment, solvency is proven without revealing balance, Vickrey pricing makes honesty rational, and last-minute extends prevent sniping.</div>
-          <div style="font-size:12px;color:#6b6b7a;margin-top:8px;font-style:italic;transform:rotate(-0.4deg);display:inline-block;background:var(--yellow);padding:2px 6px;border-radius:6px;border:1.5px solid var(--ink)">— not a floor-price leak. chain sees <span class="mono">0x9f3a…</span> + proof ✓</div>
+          <div style="font-size:12px;color:#6b6b7a;margin-top:8px;font-style:italic;display:inline-block;background:var(--yellow);padding:2px 6px;border-radius:6px;border:1px solid var(--ink)">— not a floor-price leak</div>
         </div>
       </div>
       <div class="card" style="margin-top:16px;padding:14px">
@@ -142,7 +142,7 @@
         <div class="helper">Amount stays private. A random <span class="mono">salt</span> is generated locally and never leaves your browser.</div>
         <button class="btn btn-primary" id="placeBtn" style="margin-top:12px" onclick="placeBid()">Place Sealed Bid — disclose(hash)</button>
         <button class="btn btn-ghost" id="revealBtn" style="margin-top:8px" onclick="revealBid()">Reveal (after deadline)</button>
-        <div class="helper">Chain sees only <span class="mono" id="lastCommit">0x9f3a…</span> + ZK proof. Amount + salt stay local.</div>
+        <div class="helper">Chain sees only hash + proof. Amount and salt stay private in your browser.</div>
       </div>
 
       <div class="card pad" style="margin-top:16px">
@@ -157,7 +157,7 @@
       <div class="card pad" style="margin-top:16px">
         <div class="label">Verified · human-built · studio</div>
         <div style="font-size:11px;color:#6b6b7a;margin-top:6px;display:flex;gap:6px;flex-wrap:wrap"><span style="background:var(--yellow);border:1.5px solid var(--ink);border-radius:999px;padding:4px 8px;font-weight:700">compact 5 circuits</span><span style="background:#fff;border:1.5px solid var(--ink);border-radius:999px;padding:4px 8px">cargo 0.04s</span><span style="background:#fff;border:1.5px solid var(--ink);border-radius:999px;padding:4px 8px">tsc 0</span></div>
-        <div style="margin-top:10px;display:flex;gap:12px"><a href="../HOW_TO_RUN.md" style="font-size:12px;color:var(--purple);font-weight:700;text-decoration:none">HOW_TO_RUN.md →</a><a href="../ABOUT.md" style="font-size:12px;color:var(--purple);font-weight:700;text-decoration:none">ABOUT.md →</a></div>
+
       </div>
     </div>
   </div>
@@ -171,7 +171,7 @@
 <div class="wrap" id="page-create" style="display:none;max-width:640px">
   <h2 style="font-family:Bricolage Grotesque,sans-serif;font-size:28px">Create Auction <span style="font-family:Instrument Serif,serif;font-weight:400;font-style:italic;background:var(--lime);padding:2px 8px;border-radius:6px;border:2px solid var(--ink)">sealed</span></h2>
   <div class="card pad">
-    <label class="label">NFT Contract</label><input id="createContract" placeholder="0x..." value="0xMidnightShieldGenesis" style="width:100%;padding:10px;border:2px solid var(--ink);border-radius:12px;margin:6px 0 12px;box-shadow:2px 2px 0 var(--ink)">
+    <label class="label">NFT Contract</label><input id="createContract" placeholder="MidnightShieldGenesis" value="MidnightShieldGenesis" style="width:100%;padding:10px;border:1px solid var(--line);border-radius:12px;margin:6px 0 12px">
     <label class="label">Min Bid (DUST)</label><input id="createMin" type="number" placeholder="1000" value="1000" style="width:100%;padding:10px;border:2px solid var(--ink);border-radius:12px;margin:6px 0 12px;box-shadow:2px 2px 0 var(--ink)">
     <label class="label">Reserve (hidden)</label><input id="createReserve" type="number" placeholder="3000" value="3000" style="width:100%;padding:10px;border:2px solid var(--ink);border-radius:12px;margin:6px 0 12px;box-shadow:2px 2px 0 var(--ink)">
     <label class="label">Duration (seconds)</label><input id="createDuration" type="number" placeholder="3600" value="3600" style="width:100%;padding:10px;border:2px solid var(--ink);border-radius:12px;margin:6px 0 12px;box-shadow:2px 2px 0 var(--ink)">
@@ -188,13 +188,13 @@ let wallet = localStorage.getItem('ms-wallet') || null;
 let bids = JSON.parse(localStorage.getItem('ms-bids') || '[]');
 if(bids.length===0){
   bids = [
-    {bidder:'0x71…8a9f', amount:0, commitment:'0x71…8a9f', salt:'', revealed:false, ts: Date.now()-8*60000},
-    {bidder:'0x3c…b1d4', amount:3800, commitment:'0x3cb1…d4e8', salt:'0xSalt3c', revealed:true, ts: Date.now()-14*60000},
+    {bidder:'Bidder 2', amount:0, commitment:'commit2', salt:'', revealed:false, ts: Date.now()-8*60000},
+    {bidder:'Bidder 3', amount:3800, commitment:'commit3', salt:'salt3', revealed:true, ts: Date.now()-14*60000},
   ];
   saveBids();
 }
 let auction = JSON.parse(localStorage.getItem('ms-auction') || 'null') || {
-  nftContract:'0xMidnightShieldGenesis', tokenId:1, minBid:1000, reserve:3000, reserveHidden:true, duration:3600, type:1, createdAt: Date.now(), bids:3, revealed:2
+  nftContract:'MidnightShieldGenesis', tokenId:1, minBid:1000, reserve:3000, reserveHidden:true, duration:3600, type:1, createdAt: Date.now(), bids:3, revealed:2
 };
 function saveBids(){ localStorage.setItem('ms-bids', JSON.stringify(bids)); }
 function saveAuction(){ localStorage.setItem('ms-auction', JSON.stringify(auction)); }
@@ -203,7 +203,7 @@ function updateWalletUI(){
   const label=document.getElementById('walletLabel');
   const dot=document.getElementById('walletDot');
   const btn=document.getElementById('walletBtn');
-  if(wallet){ label.textContent = wallet.slice(0,6)+'...'+wallet.slice(-4); dot.style.display='block'; btn.classList.add('connected'); btn.style.background='var(--yellow)'; btn.style.color='var(--ink)'; }
+  if(wallet){ label.textContent = 'Connected'; dot.style.display='block'; btn.classList.add('connected'); btn.style.background='var(--yellow)'; btn.style.color='var(--ink)'; }
   else { label.textContent = 'Connect'; dot.style.display='none'; btn.classList.remove('connected'); btn.style.background='var(--ink)'; btn.style.color='#fff'; }
 }
 function toggleWallet(){
@@ -255,15 +255,14 @@ function renderHistory(){
     const isYou = wallet && b.bidder===wallet;
     const when = Math.round((Date.now()-b.ts)/60000)+'m ago';
     const pill = b.revealed ? '<span class="pill" style="background:#e0f2fe;color:#0c4a6e;border-color:#bae6fd">revealed</span>' : '<span class="pill">hidden</span>';
-    return `<div class="item"><div class="ic" style="background:#f4f4f5"></div><div><div class="who">${isYou?'You':b.bidder} • ${when}</div><div class="sub">${b.revealed?b.amount+' DUST — revealed': 'hidden • '+b.commitment}</div></div>${pill}</div>`;
+    return `<div class="item"><div class="ic" style="background:#f4f4f5"></div><div><div class="who">${isYou?'You':'Bidder'} • ${when}</div><div class="sub">${b.revealed?b.amount.toLocaleString()+' DUST — revealed': 'Sealed bid — hidden'}</div></div>${pill}</div>`;
   }).join('') || '<div class="helper">No bids yet.</div>';
   document.getElementById('bidsCount').textContent = `${bids.length} committed • ${bids.filter(b=>b.revealed).length} revealed`;
   const hasHidden = wallet && bids.some(b=>b.bidder===wallet && !b.revealed);
   const rb=document.getElementById('revealBtn'); rb.disabled=!hasHidden; rb.style.opacity=hasHidden?'1':'.45';
   const revealed = bids.filter(b=>b.revealed).map(b=>b.amount).sort((a,b)=>b-a);
   if(revealed.length>=2) document.getElementById('vickreyPreview').textContent = `Pay ${revealed[0]} → actually ${revealed[1]} if second is ${revealed[1]}`;
-  const last = wallet? bids.find(b=>b.bidder===wallet) : null;
-  if(last) document.getElementById('lastCommit').textContent = last.commitment;
+  // no hex display — keep UI clean
 }
 renderHistory();
 function placeBid(){
@@ -275,7 +274,7 @@ function placeBid(){
   const commitment = '0x'+Array.from(crypto.getRandomValues(new Uint8Array(4))).map(b=>b.toString(16).padStart(2,'0')).join('')+'…'+salt.slice(2,6);
   bids.unshift({bidder:wallet, amount:Number(amt), commitment, salt, revealed:false, ts: Date.now()});
   saveBids(); renderHistory();
-  toast(`Sealed bid ${amt} DUST committed: disclose(H(${amt}||salt)) → ${commitment} — chain sees only hash + ZK proof ✓`,'success');
+  toast(`Sealed bid ${Number(amt).toLocaleString()} DUST committed — chain sees only hash + proof`,'success');
   amtEl.value=''; sec=107;
 }
 function revealBid(){
@@ -283,7 +282,7 @@ function revealBid(){
   const my = bids.find(b=>b.bidder===wallet && !b.revealed);
   if(!my) return toast('No hidden commitment to reveal','error');
   my.revealed = true; saveBids(); renderHistory();
-  toast(`Revealed ${my.amount} DUST: disclose(${my.commitment}, ${my.amount}, salt) → reveal_bid==true ✓`,'success');
+  toast(`Revealed ${Number(my.amount).toLocaleString()} DUST — verified`,'success');
 }
 function settleAuction(){
   const revealed = bids.filter(b=>b.revealed);
@@ -298,13 +297,13 @@ function settleAuction(){
     res.innerHTML = `Reserve NOT met: winning ${winner.amount} < reserve ${auction.reserve} — auction failed, all refunded.`;
     document.getElementById('reserveDisplay').textContent = auction.reserve+' (not met)';
   } else {
-    res.innerHTML = `Settled ✓ Winner <b>${winner.bidder}</b> (${winner.amount} DUST) pays <b>${price} DUST</b> ${auction.type===1?'(Vickrey b_(2))':'(first-price)'}<br>Losers auto-refunded. Emitted <span class="mono">AuctionSettled</span>.`;
+    res.innerHTML = `Settled ✓ Winning bid <b>${Number(winner.amount).toLocaleString()} DUST</b> pays <b>${Number(price).toLocaleString()} DUST</b> ${auction.type===1?'(Vickrey)':'(first-price)'}<br>Losers auto-refunded.`;
     document.getElementById('reserveDisplay').textContent = auction.reserve+' (met ✓)';
   }
-  toast(reserveMet ? `Settled: winner ${winner.bidder} pays ${price}` : 'Settled: reserve not met','success');
+  toast(reserveMet ? `Settled: winning ${Number(winner.amount).toLocaleString()} DUST pays ${Number(price).toLocaleString()} DUST` : 'Settled: reserve not met','success');
 }
 function createAuction(){
-  const c=document.getElementById('createContract').value.trim()||'0xNew';
+  const c=document.getElementById('createContract').value.trim()||'NewCollection';
   const min=parseInt(document.getElementById('createMin').value)||1000;
   const res=parseInt(document.getElementById('createReserve').value)||3000;
   const dur=parseInt(document.getElementById('createDuration').value)||3600;
