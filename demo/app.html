@@ -3,88 +3,98 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>MidnightShield — Sealed Auctions</title>
+<title>MidnightShield — Studio Sealed Auctions</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fragment+Mono:ital@0;1&family=Instrument+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Fragment+Mono&family=Instrument+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <style>
-  :root{--bg:#f8f7f5;--paper:#ffffff;--ink:#0a0a0f;--muted:#6b6b7a;--line:#e8e8ec;--accent:#2a1b8d;--accent-2:#6d4aff;--warn:#fff7e6;--warn-line:#f5d78e;--ok:#eef7f0;--ok-line:#b7e5c2}
+  :root{--bg:#FFFBF0;--ink:#0a0a0f;--line:#e8e0d8;--yellow:#FFD600;--pink:#FF3B82;--blue:#3B82FF;--lime:#BFFF00;--purple:#6D4AFF;--paper:#fff}
   *{box-sizing:border-box}
   html{scroll-behavior:smooth}
-  body{margin:0;background:var(--bg);color:var(--ink);font-family:"Instrument Sans",Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
-  /* header - real marketplace header, human crafted: thin border, search with icon, wallet with avatar */
-  header{position:sticky;top:0;z-index:30;background:rgba(255,255,255,.9);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:20px;padding:14px 22px}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:"Instrument Sans",system-ui,sans-serif;overflow-x:hidden}
+  /* studio marquee */
+  .marquee{background:var(--ink);color:#fff;overflow:hidden;white-space:nowrap;padding:7px 0;font-family:"Fragment Mono",monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase}
+  .marquee span{ display:inline-block; padding-left:100%; animation:marq 18s linear infinite}
+  @keyframes marq{0%{transform:translateX(0)}100%{transform:translateX(-100%)}}
+  /* header hand-drawn */
+  header{position:sticky;top:0;z-index:20;background:rgba(255,251,240,.88);backdrop-filter:blur(12px);border-bottom:2px solid var(--ink);display:flex;align-items:center;gap:18px;padding:12px 20px}
   .brand{display:flex;align-items:center;gap:10px;cursor:pointer}
-  .mark{width:32px;height:32px;border-radius:9px;background:var(--ink);color:#fff;display:grid;place-items:center;font-family:"Instrument Serif",serif;font-size:16px;letter-spacing:-.02em}
-  .brand b{font-size:17px;letter-spacing:-.02em;font-weight:700}
-  .brand small{font-size:11px;color:var(--muted);font-weight:500;letter-spacing:.02em}
-  nav{display:flex;gap:22px;font-size:13px;font-weight:500}
-  nav a{color:var(--muted);text-decoration:none;padding:6px 2px;border-bottom:2px solid transparent;transition:.15s} nav a.active{color:var(--ink);border-color:var(--ink)} nav a:hover{color:var(--ink)}
+  .mark{width:36px;height:36px;border-radius:10px;background:var(--yellow);border:2px solid var(--ink);display:grid;place-items:center;font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:16px;transform:rotate(-2deg);box-shadow:3px 3px 0 var(--ink)}
+  .brand b{font-family:"Bricolage Grotesque",sans-serif;font-size:19px;letter-spacing:-.03em}
+  .brand small{font-size:10px;background:var(--pink);color:#fff;border-radius:999px;padding:2px 6px;font-weight:700;margin-left:4px;transform:rotate(1deg);display:inline-block}
+  nav{display:flex;gap:18px;font-size:13px;font-weight:600}
+  nav a{color:var(--ink);text-decoration:none;padding:6px 2px;position:relative}
+  nav a.active::after{content:"";position:absolute;left:0;right:0;bottom:-2px;height:3px;background:var(--yellow);border-radius:2px;transform:rotate(-0.8deg)}
+  nav a:hover{color:var(--purple)}
   .search{margin-left:auto;flex:0 1 420px;position:relative}
-  .search input{width:100%;background:#fff;border:1px solid var(--line);border-radius:999px;padding:10px 14px 10px 36px;font-size:13px;outline:none;transition:.15s}
-  .search input:focus{border-color:var(--ink);box-shadow:0 0 0 3px rgba(10,10,15,.06)}
-  .search svg{position:absolute;left:12px;top:11px;width:14px;height:14px;color:#9a9aa6}
-  .wallet{display:flex;align-items:center;gap:8px;background:var(--ink);color:#fff;border:1px solid var(--ink);border-radius:999px;padding:8px 14px;font-weight:600;font-size:13px;cursor:pointer;transition:.15s}
-  .wallet:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(10,10,15,.15)}
-  .wallet.connected{background:#fff;color:var(--ink)}
-  .wallet .dot{width:7px;height:7px;border-radius:50%;background:#16a34a;box-shadow:0 0 0 4px rgba(22,163,74,.12)}
-  /* page */
+  .search input{width:100%;background:#fff;border:2px solid var(--ink);border-radius:999px;padding:10px 14px 10px 38px;font-size:13px;font-weight:500;outline:none;box-shadow:4px 4px 0 var(--ink);transition:.15s}
+  .search input:focus{transform:translate(-1px,-1px);box-shadow:6px 6px 0 var(--ink)}
+  .search svg{position:absolute;left:14px;top:12px;width:14px;height:14px}
+  .wallet{display:flex;align-items:center;gap:8px;background:var(--ink);color:#fff;border:2px solid var(--ink);border-radius:999px;padding:9px 16px;font-weight:700;font-size:13px;cursor:pointer;box-shadow:4px 4px 0 var(--yellow);transition:.15s}
+  .wallet:hover{transform:translate(-1px,-1px);box-shadow:6px 6px 0 var(--yellow)}
+  .wallet.connected{background:var(--yellow);color:var(--ink);border-color:var(--ink)}
+  /* blobs */
+  .blobs{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:-1}
+  .blob{position:absolute;border-radius:50%;filter:blur(40px);opacity:.18;animation:drift 12s ease-in-out infinite alternate}
+  .blob1{width:520px;height:520px;background:var(--yellow);top:-120px;left:-80px;animation-delay:0s}
+  .blob2{width:420px;height:420px;background:var(--pink);top:180px;right:-60px;animation-delay:-4s}
+  .blob3{width:380px;height:380px;background:var(--blue);bottom:80px;left:40%;animation-delay:-8s}
+  @keyframes drift{0%{transform:translate(0,0) scale(1)}100%{transform:translate(18px,-14px) scale(1.06)}}
   .wrap{max-width:1180px;margin:0 auto;padding:24px 22px 40px}
-  .crumbs{font-size:12px;color:#8a8a9a} .crumbs a{color:#8a8a9a;text-decoration:none} .crumbs a:hover{color:var(--ink)}
-  .h1{font-family:"Instrument Serif",serif;font-size:36px;font-weight:400;letter-spacing:-.03em;line-height:1;margin:10px 0 8px}
-  .submeta{display:flex;flex-wrap:wrap;gap:10px;align-items:center;font-size:13px;color:var(--muted)}
+  .crumbs{font-size:12px;color:#8a7f7a} .crumbs a{color:#8a7f7a;text-decoration:none}
+  .h1{font-family:"Bricolage Grotesque",sans-serif;font-size:40px;font-weight:800;letter-spacing:-.04em;line-height:.9;margin:10px 0 8px}
+  .h1 em{font-family:"Instrument Serif",serif;font-weight:400;font-style:italic;background:var(--yellow);padding:0 8px;border-radius:6px;transform:rotate(-0.7deg);display:inline-block;border:2px solid var(--ink);box-shadow:3px 3px 0 var(--ink)}
+  .submeta{display:flex;flex-wrap:wrap;gap:10px;align-items:center;font-size:13px;color:#5a554f}
   .owner{display:flex;align-items:center;gap:7px}
-  .avatar{width:22px;height:22px;border-radius:50%;background:#0ea5e9;color:#fff;display:grid;place-items:center;font-size:10px;font-weight:700}
-  .verified{width:15px;height:15px;border-radius:50%;background:#0ea5e9;color:#fff;display:grid;place-items:center;font-size:8px}
-  .pill{inline-size:fit-content;display:inline-flex;align-items:center;gap:6px;background:#fff;border:1px solid var(--line);border-radius:999px;padding:6px 10px;font-size:11px;font-weight:600}
-  .dot-live{width:6px;height:6px;border-radius:50%;background:#0ea5e9;animation:pulse 1.6s infinite}
-  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(14,165,233,.35)}70%{box-shadow:0 0 0 6px rgba(14,165,233,0)}100%{box-shadow:0 0 0 0 rgba(14,165,233,0)}}
-  /* grid */
+  .avatar{width:24px;height:24px;border-radius:50%;background:var(--ink);color:#fff;display:grid;place-items:center;font-size:11px;font-weight:700;border:2px solid var(--ink)}
+  .verified{width:16px;height:16px;border-radius:50%;background:var(--blue);color:#fff;display:grid;place-items:center;font-size:8px;border:1.5px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.2)}
+  .pill{inline-size:fit-content;display:inline-flex;align-items:center;gap:6px;background:#fff;border:2px solid var(--ink);border-radius:999px;padding:6px 12px;font-size:11px;font-weight:700;box-shadow:2px 2px 0 var(--ink)}
+  .dot-live{width:7px;height:7px;border-radius:50%;background:#0ea5e9;box-shadow:0 0 0 4px rgba(14,165,233,.18);animation:pulse 1.6s infinite}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(14,165,233,.35)}70%{box-shadow:0 0 0 7px rgba(14,165,233,0)}100%{box-shadow:0 0 0 0 rgba(14,165,233,0)}}
   .grid{display:grid;grid-template-columns:1.18fr .82fr;gap:22px;margin-top:18px}
   @media(max-width:940px){.grid{grid-template-columns:1fr} .search{display:none}}
-  .card{background:var(--paper);border:1px solid var(--line);border-radius:18px;overflow:hidden;box-shadow:0 1px 2px rgba(10,10,15,.04), 0 8px 24px rgba(10,10,15,.04)}
-  .card:hover{box-shadow:0 1px 2px rgba(10,10,15,.06), 0 12px 32px rgba(10,10,15,.06)}
+  .card{background:var(--paper);border:2.5px solid var(--ink);border-radius:20px;overflow:hidden;box-shadow:6px 6px 0 var(--ink);transition:.2s}
+  .card:hover{transform:translate(-1px,-1px);box-shadow:8px 8px 0 var(--ink)}
   .media{position:relative;background:#080810;aspect-ratio:4/3;overflow:hidden}
-  .media img{width:100%;height:100%;object-fit:cover;display:block}
-  .media::after{content:"";position:absolute;inset:0;background:radial-gradient(600px 300px at 30% 20%, rgba(109,74,255,.18), transparent 60%)}
-  .chip{position:absolute;bottom:12px;left:12px;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);border-radius:999px;padding:7px 10px;font-size:11px;font-weight:600;border:1px solid rgba(0,0,0,.06)}
+  .media img{width:100%;height:100%;object-fit:cover;display:block;transition:.3s}
+  .media:hover img{transform:scale(1.02) rotate(0.2deg)}
+  .chip{position:absolute;bottom:12px;left:12px;background:var(--yellow);border:2px solid var(--ink);border-radius:999px;padding:7px 12px;font-size:11px;font-weight:800;box-shadow:2px 2px 0 var(--ink);transform:rotate(-0.8deg)}
   .pad{padding:16px}
-  .label{font-size:10px;letter-spacing:.08em;text-transform:uppercase;font-weight:600;color:#8a8a9a}
-  .val{font-size:14px;font-weight:600}
-  .mono{font-family:"Fragment Mono",JetBrains Mono,ui-monospace,monospace;font-size:11px;color:#2a2a33}
-  .divider{height:1px;background:#f0f0f3;margin:14px 0}
-  .timer{border:1px solid var(--warn-line);background:var(--warn);border-radius:14px;padding:12px 14px;display:flex;justify-content:space-between;align-items:center}
-  .timer strong{font-size:14px;letter-spacing:-.01em}
-  .btn{width:100%;border:0;border-radius:12px;padding:13px 14px;font-weight:650;font-size:14px;cursor:pointer;transition:.15s}
-  .btn-primary{background:var(--ink);color:#fff} .btn-primary:hover{transform:translateY(-1px);box-shadow:0 8px 20px rgba(10,10,15,.18)} .btn-primary:active{transform:none}
-  .btn-primary:disabled{opacity:.4;cursor:not-allowed;transform:none;box-shadow:none}
-  .btn-ghost{background:#fff;border:1px solid var(--line);color:var(--ink)} .btn-ghost:hover{background:#fafaf9} .btn-ghost:disabled{opacity:.4;cursor:not-allowed}
-  .helper{font-size:11px;color:#8a8a9a;line-height:1.5}
-  .note{border-left:2.5px solid var(--ink);background:#fafaf9;border-radius:0 12px 12px 0;padding:10px 12px;font-size:11px;color:#3a3a46}
-  .item{display:flex;gap:10px;padding:11px 0;border-bottom:1px solid #f0f0f3}
+  .label{font-size:10px;letter-spacing:.08em;text-transform:uppercase;font-weight:700;color:#8a7f7a}
+  .val{font-size:14px;font-weight:700}
+  .mono{font-family:"Fragment Mono",monospace;font-size:11px}
+  .divider{height:2px;background:var(--ink);opacity:.08;margin:14px 0;border-radius:2px}
+  .timer{border:2.5px solid var(--ink);background:var(--yellow);border-radius:14px;padding:12px 14px;display:flex;justify-content:space-between;align-items:center;transform:rotate(0.3deg);box-shadow:3px 3px 0 var(--ink)}
+  .btn{width:100%;border:2.5px solid var(--ink);border-radius:14px;padding:13px 14px;font-weight:800;font-size:14px;cursor:pointer;transition:.15s;box-shadow:4px 4px 0 var(--ink)}
+  .btn-primary{background:var(--ink);color:#fff} .btn-primary:hover{transform:translate(-1px,-1px);box-shadow:6px 6px 0 var(--ink)} .btn-primary:active{transform:none;box-shadow:3px 3px 0 var(--ink)} .btn-primary:disabled{opacity:.4;cursor:not-allowed;transform:none;box-shadow:4px 4px 0 var(--ink)}
+  .btn-ghost{background:#fff;color:var(--ink)} .btn-ghost:hover{background:var(--bg);transform:translate(-1px,-1px);box-shadow:6px 6px 0 var(--ink)} .btn-ghost:disabled{opacity:.4;cursor:not-allowed}
+  .helper{font-size:11px;color:#6b6b7a;line-height:1.5}
+  .note{border-left:3px solid var(--ink);background:#fffbeb;border-radius:0 12px 12px 0;padding:10px 12px;font-size:11px;color:#3a3a46}
+  .item{display:flex;gap:10px;padding:11px 0;border-bottom:1.5px solid #f0ece5}
   .item:last-child{border:0}
-  .ic{width:32px;height:32px;border-radius:50%;background:#f4f4f5;display:grid;place-items:center;font-size:13px;flex:0 0 32px;border:1px solid var(--line)}
-  .who{font-size:13px;font-weight:600} .sub{font-size:12px;color:#6b6b7a}
-  .zk{background:var(--ok);border:1px solid var(--ok-line);border-radius:12px;padding:9px 11px;font-size:11px;color:#14532d}
-  #toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:#0f0f12;color:#fff;border-radius:12px;padding:12px 16px;font-size:13px;display:none;max-width:92%;z-index:50;box-shadow:0 16px 40px rgba(0,0,0,.22)}
+  .ic{width:32px;height:32px;border-radius:50%;background:#fff;border:2px solid var(--ink);display:grid;place-items:center;font-size:13px;flex:0 0 32px;box-shadow:2px 2px 0 var(--ink)}
+  .who{font-size:13px;font-weight:700} .sub{font-size:12px;color:#6b6b7a}
+  .zk{background:#e6ffe9;border:2px solid var(--ink);border-radius:12px;padding:9px 11px;font-size:11px;color:#14532d;box-shadow:3px 3px 0 var(--ink);transform:rotate(-0.2deg)}
+  #toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;border-radius:14px;padding:12px 16px;font-size:13px;display:none;max-width:92%;z-index:50;box-shadow:0 16px 40px rgba(0,0,0,.24);border:2px solid #fff}
   .explore-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:14px}
   @media(max-width:700px){.explore-grid{grid-template-columns:1fr}}
-  .explore-card{border:1px solid var(--line);border-radius:14px;padding:12px;background:#fff;cursor:pointer;transition:.15s}
-  .explore-card:hover{border-color:var(--ink);transform:translateY(-1px)}
-  /* human imperfections: subtle paper grain */
-  body::before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.015;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+  .explore-card{border:2.5px solid var(--ink);border-radius:16px;padding:12px;background:#fff;cursor:pointer;box-shadow:4px 4px 0 var(--ink);transition:.15s}
+  .explore-card:hover{transform:translate(-1px,-1px) rotate(0.3deg);box-shadow:6px 6px 0 var(--ink)}
+  .sticker{position:absolute;top:-8px;right:-8px;background:var(--pink);color:#fff;border:2px solid var(--ink);border-radius:999px;padding:4px 8px;font-size:10px;font-weight:800;transform:rotate(6deg);box-shadow:2px 2px 0 var(--ink)}
 </style>
 </head>
 <body>
+<div class="blobs"><div class="blob blob1"></div><div class="blob blob2"></div><div class="blob blob3"></div></div>
+<div class="marquee"><span>Sealed Bids • ZK Solvency • Vickrey Fair • Anti-Sniping • Auto Refunds • Midnight Network • Compact 0.5.2 • 5 ZK Circuits • Sealed Bids • ZK Solvency • Vickrey Fair •</span></div>
 <header>
-  <div class="brand" onclick="navigate('auctions')"><div class="mark">◐</div><b>MidnightShield</b><small>SEALED</small></div>
+  <div class="brand" onclick="navigate('auctions')"><div class="mark">◐</div><b>MidnightShield</b><small>STUDIO</small></div>
   <nav><a href="#" id="nav-explore" onclick="navigate('explore');return false">Explore</a><a href="#" id="nav-auctions" class="active" onclick="navigate('auctions');return false">Auctions</a><a href="#" id="nav-create" onclick="navigate('create');return false">Create</a></nav>
   <div class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20 -3 -3"/></svg><input id="searchInput" placeholder="Search collections, NFTs, artists" oninput="handleSearch(this.value)"></div>
   <button class="wallet" id="walletBtn" onclick="toggleWallet()"><span class="dot" id="walletDot" style="display:none"></span><span id="walletLabel">Connect</span></button>
 </header>
 
 <div class="wrap" id="page-auctions">
-  <div class="crumbs"><a href="#" onclick="navigate('explore');return false">Explore</a> › <a href="#">Photography</a> › <span style="color:var(--ink);font-weight:500">Midnight Shield — Genesis</span></div>
-  <div class="h1">Midnight Shield Art — Genesis #1</div>
+  <div class="crumbs"><a href="#" onclick="navigate('explore');return false">Explore</a> › <a href="#">Photography</a> › <span style="color:var(--ink);font-weight:700">Midnight Shield — Genesis</span></div>
+  <div class="h1">Midnight Shield Art — <em>Genesis #1</em></div>
   <div class="submeta">
     <span class="owner"><span class="avatar">H</span> harish_0075 <span class="verified">✓</span> Seller</span>
     <span>•</span><span>On Midnight • Sealed-bid</span>
@@ -100,19 +110,19 @@
         </div>
         <div class="pad">
           <div style="display:flex;justify-content:space-between"><span class="label">Collection</span><span class="label">Token</span></div>
-          <div style="display:flex;justify-content:space-between;font-weight:600"><span style="font-size:13px">Midnight Shield Genesis</span><span class="mono">Field · #1</span></div>
+          <div style="display:flex;justify-content:space-between;font-weight:700"><span style="font-size:13px">Midnight Shield Genesis</span><span class="mono">Field · #1</span></div>
           <div class="divider"></div>
           <div style="display:flex;justify-content:space-between"><span class="label">Min bid</span><span class="label">Reserve</span><span class="label">Bids</span></div>
-          <div style="display:flex;justify-content:space-between;font-weight:600"><span>1,000 DUST</span><span style="color:#6b6b7a" id="reserveDisplay">hidden</span><span id="bidsCount">3 committed • 2 revealed</span></div>
+          <div style="display:flex;justify-content:space-between;font-weight:800"><span>1,000 DUST</span><span style="color:#6b6b7a" id="reserveDisplay">hidden</span><span id="bidsCount">3 committed • 2 revealed</span></div>
           <div class="helper">Seller committed <code>hash(reserve || salt)</code> — bidders never see reserve, only <code>reserveMet</code> after settle.</div>
           <div class="divider"></div>
-          <div class="label" style="margin-bottom:6px">About this auction</div>
+          <div class="label" style="margin-bottom:6px">About this auction — handmade</div>
           <div style="font-size:13px;line-height:1.6;color:#27272a">A privacy-preserving sealed-bid auction. Every bid is a ZK-commitment, solvency is proven without revealing balance, Vickrey pricing makes honesty rational, and last-minute extends prevent sniping.</div>
-          <div style="font-size:12px;color:#6b6b7a;margin-top:8px;font-style:italic">— not a floor-price leak. The chain sees <span class="mono">0x9f3a…</span> + proof ✓</div>
+          <div style="font-size:12px;color:#6b6b7a;margin-top:8px;font-style:italic;transform:rotate(-0.4deg);display:inline-block;background:var(--yellow);padding:2px 6px;border-radius:6px;border:1.5px solid var(--ink)">— not a floor-price leak. chain sees <span class="mono">0x9f3a…</span> + proof ✓</div>
         </div>
       </div>
       <div class="card" style="margin-top:16px;padding:14px">
-        <div style="display:flex;justify-content:space-between;align-items:center"><span class="label">Bid history · privacy-preserving</span><span style="font-size:12px;color:#4f46e5;cursor:pointer;font-weight:600" onclick="refreshHistory()">Refresh ↻</span></div>
+        <div style="display:flex;justify-content:space-between;align-items:center"><span class="label">Bid history · privacy-preserving</span><span style="font-size:12px;color:var(--purple);cursor:pointer;font-weight:700" onclick="refreshHistory()">Refresh ↻</span></div>
         <div id="bidHistory" style="margin-top:6px"></div>
         <div class="zk" style="margin-top:10px" id="zkBox">ZK solvency proof <b>✓ verified</b> — proves <span class="mono">balance ≥ amount</span> without revealing balance.</div>
       </div>
@@ -120,12 +130,12 @@
 
     <div>
       <div class="card pad">
-        <div style="display:flex;justify-content:space-between;align-items:center"><span class="label">Current status</span><span class="pill"><span class="dot-live"></span> Live auction • Vickrey</span></div>
-        <div style="margin-top:12px" class="timer"><div><strong id="timer">00:47 → 01:47</strong><div style="font-size:11px;color:#92400e;font-weight:500">anti-sniping extended +60s</div></div><div style="text-align:right;font-size:11px;color:#92400e">Final minute<br>detected</div></div>
+        <div style="display:flex;justify-content:space-between;align-items:center"><span class="label">Current status</span><span class="pill" style="background:var(--lime)"><span class="dot-live"></span> Live • Vickrey</span></div>
+        <div style="margin-top:12px" class="timer"><div><strong id="timer">00:47 → 01:47</strong><div style="font-size:11px;color:#92400e;font-weight:600">anti-sniping extended +60s</div></div><div style="text-align:right;font-size:11px;color:#92400e">Final minute<br>detected</div></div>
         <div class="helper">Last-minute bid auto-extends the deadline. Sniping is impossible.</div>
         <div class="divider"></div>
         <div class="label">Your sealed bid</div>
-        <div style="display:flex;gap:8px;margin-top:8px"><input id="bidAmount" type="number" placeholder="4,200" style="flex:1;background:#fdfdfd;border:1px solid var(--line);border-radius:12px;padding:12px;font-size:14px;font-weight:600;outline:none"><span style="align-self:center;font-size:12px;color:#6b6b7a;font-weight:600">DUST</span></div>
+        <div style="display:flex;gap:8px;margin-top:8px"><input id="bidAmount" type="number" placeholder="4,200" style="flex:1;background:#fff;border:2px solid var(--ink);border-radius:12px;padding:12px;font-size:14px;font-weight:700;outline:none;box-shadow:3px 3px 0 var(--ink)"><span style="align-self:center;font-size:12px;color:#6b6b7a;font-weight:700">DUST</span></div>
         <div class="helper">Amount stays private. A random <span class="mono">salt</span> is generated locally and never leaves your browser.</div>
         <button class="btn btn-primary" id="placeBtn" style="margin-top:12px" onclick="placeBid()">Place Sealed Bid — disclose(hash)</button>
         <button class="btn btn-ghost" id="revealBtn" style="margin-top:8px" onclick="revealBid()">Reveal (after deadline)</button>
@@ -134,37 +144,37 @@
       </div>
 
       <div class="card pad" style="margin-top:16px">
-        <div style="display:flex;justify-content:space-between"><span class="label">Settlement</span><span class="label" style="color:var(--ink)">Vickrey</span></div>
-        <div style="font-size:13px;margin-top:8px;line-height:1.5">Winner pays <b>second-highest</b> — honest bidding is rational.</div>
-        <div style="background:#f8f8f7;border:1px solid var(--line);border-radius:12px;padding:12px;text-align:center;margin-top:10px"><div style="font-size:11px;color:#6b6b7a">If you win at 4,200</div><div style="font-weight:700" id="vickreyPreview">Pay 4,200 → actually 3,800 if second is 3,800</div></div>
+        <div style="display:flex;justify-content:space-between"><span class="label">Settlement</span><span class="label" style="background:var(--yellow);border:1.5px solid var(--ink);border-radius:999px;padding:3px 8px">VICKREY</span></div>
+        <div style="font-size:13px;margin-top:8px;line-height:1.5">Winner pays <b>second-highest</b> — <span style="background:var(--yellow);padding:1px 4px;border-radius:4px">honest bidding is rational</span>.</div>
+        <div style="background:var(--ink);color:#fff;border:2px solid var(--ink);border-radius:12px;padding:12px;text-align:center;margin-top:10px;transform:rotate(0.4deg);box-shadow:3px 3px 0 var(--yellow)"><div style="font-size:11px;color:#b7b7c2">If you win at 4,200</div><div style="font-weight:800;font-size:15px" id="vickreyPreview">Pay 4,200 → actually 3,800 if second is 3,800</div></div>
         <button class="btn btn-ghost" style="margin-top:10px" id="settleBtn" onclick="settleAuction()">Settle (seller only, after reveal)</button>
         <div class="helper">Settle computes <span class="mono">winner = argmax(b_i), price = b_(2)</span> in ZK, verifies <span class="mono">winningBid ≥ reserve</span>, emits <span class="mono">AuctionSettled</span>, auto-refunds losers.</div>
-        <div id="settleResult" style="display:none;margin-top:10px;border-radius:12px;padding:12px;font-size:13px;line-height:1.5"></div>
+        <div id="settleResult" style="display:none;margin-top:10px;border-radius:12px;padding:12px;font-size:13px;line-height:1.5;border:2px solid var(--ink);box-shadow:3px 3px 0 var(--ink)"></div>
       </div>
 
       <div class="card pad" style="margin-top:16px">
-        <div class="label">Verified · human-built</div>
-        <div style="font-size:11px;color:#6b6b7a;margin-top:6px;display:flex;gap:6px;flex-wrap:wrap"><span style="background:#f4f4f5;border-radius:999px;padding:4px 8px">compact compile 5 circuits</span><span style="background:#f4f4f5;border-radius:999px;padding:4px 8px">cargo build 0.04s</span><span style="background:#f4f4f5;border-radius:999px;padding:4px 8px">tsc 0</span></div>
-        <div style="margin-top:10px;display:flex;gap:12px"><a href="../HOW_TO_RUN.md" style="font-size:12px;color:#2a1b8d;text-decoration:none">HOW_TO_RUN.md →</a><a href="../ABOUT.md" style="font-size:12px;color:#2a1b8d;text-decoration:none">ABOUT.md →</a></div>
+        <div class="label">Verified · human-built · studio</div>
+        <div style="font-size:11px;color:#6b6b7a;margin-top:6px;display:flex;gap:6px;flex-wrap:wrap"><span style="background:var(--yellow);border:1.5px solid var(--ink);border-radius:999px;padding:4px 8px;font-weight:700">compact 5 circuits</span><span style="background:#fff;border:1.5px solid var(--ink);border-radius:999px;padding:4px 8px">cargo 0.04s</span><span style="background:#fff;border:1.5px solid var(--ink);border-radius:999px;padding:4px 8px">tsc 0</span></div>
+        <div style="margin-top:10px;display:flex;gap:12px"><a href="../HOW_TO_RUN.md" style="font-size:12px;color:var(--purple);font-weight:700;text-decoration:none">HOW_TO_RUN.md →</a><a href="../ABOUT.md" style="font-size:12px;color:var(--purple);font-weight:700;text-decoration:none">ABOUT.md →</a></div>
       </div>
     </div>
   </div>
 </div>
 
 <div class="wrap" id="page-explore" style="display:none">
-  <h2 style="font-family:Instrument Serif,serif;font-weight:400;letter-spacing:-.02em">Explore Collections</h2>
+  <h2 style="font-family:Bricolage Grotesque,sans-serif;font-size:28px;letter-spacing:-.03em">Explore Collections <span style="background:var(--yellow);padding:2px 8px;border-radius:8px;border:2px solid var(--ink);font-size:14px;transform:rotate(1deg);display:inline-block">handpicked</span></h2>
   <div class="explore-grid" id="exploreGrid"></div>
   <p class="helper">Search filters live — try “Midnight”, “Genesis”, “Vickrey”.</p>
 </div>
 <div class="wrap" id="page-create" style="display:none;max-width:640px">
-  <h2 style="font-family:Instrument Serif,serif;font-weight:400">Create Auction</h2>
+  <h2 style="font-family:Bricolage Grotesque,sans-serif;font-size:28px">Create Auction <span style="font-family:Instrument Serif,serif;font-weight:400;font-style:italic;background:var(--lime);padding:2px 8px;border-radius:6px;border:2px solid var(--ink)">sealed</span></h2>
   <div class="card pad">
-    <label class="label">NFT Contract</label><input id="createContract" placeholder="0x..." value="0xMidnightShieldGenesis" style="width:100%;padding:10px;border:1px solid var(--line);border-radius:10px;margin:6px 0 12px">
-    <label class="label">Min Bid (DUST)</label><input id="createMin" type="number" placeholder="1000" value="1000" style="width:100%;padding:10px;border:1px solid var(--line);border-radius:10px;margin:6px 0 12px">
-    <label class="label">Reserve (hidden)</label><input id="createReserve" type="number" placeholder="3000" value="3000" style="width:100%;padding:10px;border:1px solid var(--line);border-radius:10px;margin:6px 0 12px">
-    <label class="label">Duration (seconds)</label><input id="createDuration" type="number" placeholder="3600" value="3600" style="width:100%;padding:10px;border:1px solid var(--line);border-radius:10px;margin:6px 0 12px">
-    <label class="label">Pricing</label><select id="createType" style="width:100%;padding:10px;border:1px solid var(--line);border-radius:10px;margin:6px 0 12px"><option value="0">First-price</option><option value="1" selected>Vickrey (second-price)</option></select>
-    <button class="btn btn-primary" onclick="createAuction()">Create Sealed-Bid Auction</button>
+    <label class="label">NFT Contract</label><input id="createContract" placeholder="0x..." value="0xMidnightShieldGenesis" style="width:100%;padding:10px;border:2px solid var(--ink);border-radius:12px;margin:6px 0 12px;box-shadow:2px 2px 0 var(--ink)">
+    <label class="label">Min Bid (DUST)</label><input id="createMin" type="number" placeholder="1000" value="1000" style="width:100%;padding:10px;border:2px solid var(--ink);border-radius:12px;margin:6px 0 12px;box-shadow:2px 2px 0 var(--ink)">
+    <label class="label">Reserve (hidden)</label><input id="createReserve" type="number" placeholder="3000" value="3000" style="width:100%;padding:10px;border:2px solid var(--ink);border-radius:12px;margin:6px 0 12px;box-shadow:2px 2px 0 var(--ink)">
+    <label class="label">Duration (seconds)</label><input id="createDuration" type="number" placeholder="3600" value="3600" style="width:100%;padding:10px;border:2px solid var(--ink);border-radius:12px;margin:6px 0 12px;box-shadow:2px 2px 0 var(--ink)">
+    <label class="label">Pricing</label><select id="createType" style="width:100%;padding:10px;border:2px solid var(--ink);border-radius:12px;margin:6px 0 12px;box-shadow:2px 2px 0 var(--ink)"><option value="0">First-price</option><option value="1" selected>Vickrey (second-price)</option></select>
+    <button class="btn btn-primary" onclick="createAuction()">Create Sealed-Bid Auction — studio drop</button>
     <div id="createResult" class="helper"></div>
   </div>
 </div>
@@ -191,8 +201,8 @@ function updateWalletUI(){
   const label=document.getElementById('walletLabel');
   const dot=document.getElementById('walletDot');
   const btn=document.getElementById('walletBtn');
-  if(wallet){ label.textContent = wallet.slice(0,6)+'...'+wallet.slice(-4); dot.style.display='block'; btn.classList.add('connected'); }
-  else { label.textContent = 'Connect'; dot.style.display='none'; btn.classList.remove('connected'); }
+  if(wallet){ label.textContent = wallet.slice(0,6)+'...'+wallet.slice(-4); dot.style.display='block'; btn.classList.add('connected'); btn.style.background='var(--yellow)'; btn.style.color='var(--ink)'; }
+  else { label.textContent = 'Connect'; dot.style.display='none'; btn.classList.remove('connected'); btn.style.background='var(--ink)'; btn.style.color='#fff'; }
 }
 function toggleWallet(){
   if(wallet){
@@ -215,24 +225,24 @@ function handleSearch(q){
   if(!q) { renderExplore(); return; }
   const grid=document.getElementById('exploreGrid');
   [...grid.children].forEach(c=>{
-    const txt=c.textContent.toLowerCase();
-    c.style.display = txt.includes(q.toLowerCase()) ? 'block':'none';
+    c.style.display = c.textContent.toLowerCase().includes(q.toLowerCase()) ? 'block':'none';
   });
   if(document.getElementById('page-explore').style.display==='none') navigate('explore');
 }
 function renderExplore(){
   const data=[
-    {name:'Midnight Shield Genesis #1', col:'Genesis', price:'1,000 DUST', tag:'Sealed-bid • Vickrey', mine:true},
-    {name:'Midnight Cats #42', col:'Midnight Cats', price:'800 DUST', tag:'First-price'},
-    {name:'ZK Punks #7', col:'ZK Punks', price:'2,200 DUST', tag:'Sealed-bid'},
+    {name:'Midnight Shield Genesis #1', col:'Genesis', price:'1,000 DUST', tag:'Sealed-bid • Vickrey', mine:true, color:'var(--yellow)'},
+    {name:'Midnight Cats #42', col:'Midnight Cats', price:'800 DUST', tag:'First-price', color:'var(--pink)'},
+    {name:'ZK Punks #7', col:'ZK Punks', price:'2,200 DUST', tag:'Sealed-bid', color:'var(--blue)'},
   ];
   const grid=document.getElementById('exploreGrid');
   grid.innerHTML = data.map(d=>`
-    <div class="explore-card" onclick="navigate('auctions');toast('Opened ${d.name}','info')">
-      <div style="height:94px;background:#0a0a0f;border-radius:10px;display:grid;place-items:center;color:#fff;font-weight:700;letter-spacing:-.01em">${d.name.split(' ')[0]}</div>
-      <div style="font-weight:600;margin-top:10px">${d.name}</div>
-      <div style="font-size:12px;color:#6b6b7a">${d.col} • ${d.tag}</div>
-      <div style="font-size:12px;font-weight:600;margin-top:4px">${d.price} ${d.mine?'<span style=\'color:#2a1b8d\'>(yours)</span>':''}</div>
+    <div class="explore-card" onclick="navigate('auctions');toast('Opened ${d.name}','info')" style="position:relative;overflow:hidden">
+      <div style="position:absolute;top:8px;right:8px;background:${d.color};border:2px solid var(--ink);border-radius:999px;padding:3px 7px;font-size:10px;font-weight:800;transform:rotate(2deg)">${d.tag}</div>
+      <div style="height:94px;background:var(--ink);border-radius:10px;display:grid;place-items:center;color:#fff;font-weight:800;letter-spacing:-.01em;border:2px solid var(--ink)">${d.name.split(' ')[0]}</div>
+      <div style="font-weight:700;margin-top:10px">${d.name}</div>
+      <div style="font-size:12px;color:#6b6b7a">${d.col}</div>
+      <div style="font-size:12px;font-weight:700;margin-top:4px">${d.price} ${d.mine?'<span style=\'color:var(--purple)\'>(yours)</span>':''}</div>
     </div>
   `).join('');
 }
@@ -243,10 +253,7 @@ function renderHistory(){
     const isYou = wallet && b.bidder===wallet;
     const when = Math.round((Date.now()-b.ts)/60000)+'m ago';
     const pill = b.revealed ? '<span class="pill" style="background:#e0f2fe;color:#0c4a6e;border-color:#bae6fd">revealed</span>' : '<span class="pill">hidden</span>';
-    const icon = b.revealed ? '●' : '◯';
-    const name = isYou ? 'You' : b.bidder;
-    const amountText = b.revealed ? `${b.amount} DUST — revealed` : `${b.amount?b.amount+' DUST — hidden': 'hidden'} • ${b.commitment}`;
-    return `<div class="item"><div class="ic">${isYou?'◎':icon}</div><div><div class="who">${name} • ${when}</div><div class="sub">${amountText}</div></div>${pill}</div>`;
+    return `<div class="item"><div class="ic">${isYou?'◎':(b.revealed?'●':'◯')}</div><div><div class="who">${isYou?'You':b.bidder} • ${when}</div><div class="sub">${b.revealed?b.amount+' DUST — revealed': 'hidden • '+b.commitment}</div></div>${pill}</div>`;
   }).join('') || '<div class="helper">No bids yet.</div>';
   document.getElementById('bidsCount').textContent = `${bids.length} committed • ${bids.filter(b=>b.revealed).length} revealed`;
   const hasHidden = wallet && bids.some(b=>b.bidder===wallet && !b.revealed);
@@ -267,7 +274,7 @@ function placeBid(){
   bids.unshift({bidder:wallet, amount:Number(amt), commitment, salt, revealed:false, ts: Date.now()});
   saveBids(); renderHistory();
   toast(`Sealed bid ${amt} DUST committed: disclose(H(${amt}||salt)) → ${commitment} — chain sees only hash + ZK proof ✓`,'success');
-  amtEl.value=''; sec=107; document.querySelector('.timer').style.borderColor='#16a34a'; setTimeout(()=>document.querySelector('.timer').style.borderColor='#f5d78e',2000);
+  amtEl.value=''; sec=107;
 }
 function revealBid(){
   if(!wallet) return toast('Connect wallet first','error');
@@ -284,7 +291,7 @@ function settleAuction(){
   const price = auction.type===1 && revealed[1] ? revealed[1].amount : winner.amount;
   const reserveMet = winner.amount >= auction.reserve;
   const res = document.getElementById('settleResult');
-  res.style.display='block'; res.style.background = reserveMet ? '#eef7f0' : '#fef2f2'; res.style.border='1px solid '+(reserveMet?'#b7e5c2':'#fecaca'); res.style.color = reserveMet? '#14532d':'#7f1d1d';
+  res.style.display='block'; res.style.background = reserveMet ? '#eef7f0' : '#fef2f2'; res.style.border='2px solid '+(reserveMet?'#b7e5c2':'#fecaca'); res.style.color = reserveMet? '#14532d':'#7f1d1d'; res.style.boxShadow='3px 3px 0 var(--ink)';
   if(!reserveMet){
     res.innerHTML = `Reserve NOT met: winning ${winner.amount} < reserve ${auction.reserve} — auction failed, all refunded.`;
     document.getElementById('reserveDisplay').textContent = auction.reserve+' (not met)';
@@ -309,7 +316,7 @@ function createAuction(){
 function toast(msg, type='info'){
   const el=document.getElementById('toast');
   el.textContent=msg;
-  el.style.background = type==='error' ? '#7f1d1d' : '#0f0f12';
+  el.style.background = type==='error' ? '#7f1d1d' : '#0a0a0f';
   el.style.display='block';
   clearTimeout(el._t);
   el._t=setTimeout(()=>el.style.display='none',3500);
@@ -317,7 +324,6 @@ function toast(msg, type='info'){
 let sec=47;
 setInterval(()=>{
   sec = sec<=0? 47: sec-1;
-  const m=String(Math.floor(sec/60)).padStart(2,'0');
   const s=String(sec%60).padStart(2,'0');
   const c=document.getElementById('countdown');
   if(c) c.textContent=`00:${s}`;
