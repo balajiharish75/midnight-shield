@@ -18,20 +18,20 @@
   /* header hand-drawn */
   header{position:sticky;top:0;z-index:20;background:rgba(255,251,240,.88);backdrop-filter:blur(12px);border-bottom:2px solid var(--ink);display:flex;align-items:center;gap:18px;padding:12px 20px}
   .brand{display:flex;align-items:center;gap:10px;cursor:pointer}
-  .mark{width:36px;height:36px;border-radius:10px;background:var(--yellow);border:2px solid var(--ink);display:grid;place-items:center;font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:16px;transform:rotate(-2deg);box-shadow:3px 3px 0 var(--ink)}
-  .brand b{font-family:"Bricolage Grotesque",sans-serif;font-size:19px;letter-spacing:-.03em}
-  .brand small{font-size:10px;background:var(--pink);color:#fff;border-radius:999px;padding:2px 6px;font-weight:700;margin-left:4px;transform:rotate(1deg);display:inline-block}
+  .mark{width:32px;height:32px;border-radius:8px;background:var(--yellow);border:1.5px solid var(--ink);display:grid;place-items:center;font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:15px;box-shadow:0 1px 2px rgba(0,0,0,.08)}
+  .brand b{font-family:"Bricolage Grotesque",sans-serif;font-size:18px;letter-spacing:-.02em}
+  .brand small{font-size:10px;background:var(--pink);color:#fff;border-radius:999px;padding:2px 6px;font-weight:700;margin-left:4px;display:inline-block}
   nav{display:flex;gap:18px;font-size:13px;font-weight:600}
   nav a{color:var(--ink);text-decoration:none;padding:6px 2px;position:relative}
   nav a.active::after{content:"";position:absolute;left:0;right:0;bottom:-2px;height:3px;background:var(--yellow);border-radius:2px;transform:rotate(-0.8deg)}
   nav a:hover{color:var(--purple)}
   .search{margin-left:auto;flex:0 1 420px;position:relative}
-  .search input{width:100%;background:#fff;border:2px solid var(--ink);border-radius:999px;padding:10px 14px 10px 38px;font-size:13px;font-weight:500;outline:none;box-shadow:4px 4px 0 var(--ink);transition:.15s}
-  .search input:focus{transform:translate(-1px,-1px);box-shadow:6px 6px 0 var(--ink)}
+  .search input{width:100%;background:#fff;border:1px solid var(--line);border-radius:999px;padding:10px 14px 10px 38px;font-size:13px;font-weight:500;outline:none;transition:.15s}
+  .search input:focus{border-color:var(--ink);box-shadow:0 0 0 3px rgba(10,10,15,.06)}
   .search svg{position:absolute;left:14px;top:12px;width:14px;height:14px}
-  .wallet{display:flex;align-items:center;gap:8px;background:var(--ink);color:#fff;border:2px solid var(--ink);border-radius:999px;padding:9px 16px;font-weight:700;font-size:13px;cursor:pointer;box-shadow:4px 4px 0 var(--yellow);transition:.15s}
-  .wallet:hover{transform:translate(-1px,-1px);box-shadow:6px 6px 0 var(--yellow)}
-  .wallet.connected{background:var(--yellow);color:var(--ink);border-color:var(--ink)}
+  .wallet{display:flex;align-items:center;gap:8px;background:var(--ink);color:#fff;border:1px solid var(--ink);border-radius:999px;padding:9px 16px;font-weight:600;font-size:13px;cursor:pointer;transition:.15s}
+  .wallet:hover{opacity:.92}
+  .wallet.connected{background:var(--ink);color:#fff;border-color:var(--ink)}
   /* blobs */
   .blobs{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:-1}
   .blob{position:absolute;border-radius:50%;filter:blur(40px);opacity:.18;animation:drift 12s ease-in-out infinite alternate}
@@ -47,41 +47,41 @@
   .owner{display:flex;align-items:center;gap:7px}
   .avatar{width:24px;height:24px;border-radius:50%;background:var(--ink);color:#fff;display:grid;place-items:center;font-size:11px;font-weight:700;border:2px solid var(--ink)}
   .verified{width:16px;height:16px;border-radius:50%;background:var(--blue);color:#fff;display:grid;place-items:center;font-size:8px;border:1.5px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.2)}
-  .pill{inline-size:fit-content;display:inline-flex;align-items:center;gap:6px;background:#fff;border:2px solid var(--ink);border-radius:999px;padding:6px 12px;font-size:11px;font-weight:700;box-shadow:2px 2px 0 var(--ink)}
+  .pill{inline-size:fit-content;display:inline-flex;align-items:center;gap:6px;background:#fff;border:1px solid var(--line);border-radius:999px;padding:5px 10px;font-size:11px;font-weight:600}
   .dot-live{width:7px;height:7px;border-radius:50%;background:#0ea5e9;box-shadow:0 0 0 4px rgba(14,165,233,.18);animation:pulse 1.6s infinite}
   @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(14,165,233,.35)}70%{box-shadow:0 0 0 7px rgba(14,165,233,0)}100%{box-shadow:0 0 0 0 rgba(14,165,233,0)}}
   .grid{display:grid;grid-template-columns:1.18fr .82fr;gap:22px;margin-top:18px}
   @media(max-width:940px){.grid{grid-template-columns:1fr} .search{display:none}}
-  .card{background:var(--paper);border:2.5px solid var(--ink);border-radius:20px;overflow:hidden;box-shadow:6px 6px 0 var(--ink);transition:.2s}
-  .card:hover{transform:translate(-1px,-1px);box-shadow:8px 8px 0 var(--ink)}
+  .card{background:var(--paper);border:1px solid var(--line);border-radius:16px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,0.06);transition:.15s}
+  .card:hover{box-shadow:0 4px 12px rgba(0,0,0,0.08)}
   .media{position:relative;background:#080810;aspect-ratio:16/9;max-height:240px;overflow:hidden}
   .media img{width:100%;height:100%;object-fit:cover;display:block;transition:.3s;max-height:240px}
   .media:hover img{transform:scale(1.01) rotate(0.15deg)}
   /* fix for cover card that was disrupting layout - constrain hero media */
   .grid > div:first-child .card:first-child .media{max-height:200px}
   .grid > div:first-child .card:first-child .media img{object-fit:contain;background:#080810;padding:8px}
-  .chip{position:absolute;bottom:12px;left:12px;background:var(--yellow);border:2px solid var(--ink);border-radius:999px;padding:7px 12px;font-size:11px;font-weight:800;box-shadow:2px 2px 0 var(--ink);transform:rotate(-0.8deg)}
+  .chip{position:absolute;bottom:12px;left:12px;background:var(--yellow);border:1px solid var(--ink);border-radius:999px;padding:6px 10px;font-size:11px;font-weight:700}
   .pad{padding:16px}
   .label{font-size:10px;letter-spacing:.08em;text-transform:uppercase;font-weight:700;color:#8a7f7a}
   .val{font-size:14px;font-weight:700}
   .mono{font-family:"Fragment Mono",monospace;font-size:11px}
   .divider{height:2px;background:var(--ink);opacity:.08;margin:14px 0;border-radius:2px}
-  .timer{border:2.5px solid var(--ink);background:var(--yellow);border-radius:14px;padding:12px 14px;display:flex;justify-content:space-between;align-items:center;transform:rotate(0.3deg);box-shadow:3px 3px 0 var(--ink)}
-  .btn{width:100%;border:2.5px solid var(--ink);border-radius:14px;padding:13px 14px;font-weight:800;font-size:14px;cursor:pointer;transition:.15s;box-shadow:4px 4px 0 var(--ink)}
-  .btn-primary{background:var(--ink);color:#fff} .btn-primary:hover{transform:translate(-1px,-1px);box-shadow:6px 6px 0 var(--ink)} .btn-primary:active{transform:none;box-shadow:3px 3px 0 var(--ink)} .btn-primary:disabled{opacity:.4;cursor:not-allowed;transform:none;box-shadow:4px 4px 0 var(--ink)}
-  .btn-ghost{background:#fff;color:var(--ink)} .btn-ghost:hover{background:var(--bg);transform:translate(-1px,-1px);box-shadow:6px 6px 0 var(--ink)} .btn-ghost:disabled{opacity:.4;cursor:not-allowed}
+  .timer{border:1px solid #f5d78e;background:#fffbeb;border-radius:12px;padding:12px 14px;display:flex;justify-content:space-between;align-items:center}
+  .btn{width:100%;border:1px solid var(--ink);border-radius:10px;padding:12px 14px;font-weight:600;font-size:14px;cursor:pointer;transition:.15s}
+  .btn-primary{background:var(--ink);color:#fff} .btn-primary:hover{opacity:.92} .btn-primary:active{opacity:.85} .btn-primary:disabled{opacity:.4;cursor:not-allowed}
+  .btn-ghost{background:#fff;border:1px solid var(--line);color:var(--ink)} .btn-ghost:hover{background:#fafaf9} .btn-ghost:disabled{opacity:.4;cursor:not-allowed}
   .helper{font-size:11px;color:#6b6b7a;line-height:1.5}
   .note{border-left:3px solid var(--ink);background:#fffbeb;border-radius:0 12px 12px 0;padding:10px 12px;font-size:11px;color:#3a3a46}
   .item{display:flex;gap:10px;padding:11px 0;border-bottom:1.5px solid #f0ece5}
   .item:last-child{border:0}
-  .ic{width:32px;height:32px;border-radius:50%;background:#fff;border:2px solid var(--ink);display:grid;place-items:center;font-size:13px;flex:0 0 32px;box-shadow:2px 2px 0 var(--ink)}
+  .ic{width:32px;height:32px;border-radius:50%;background:#fff;border:1px solid var(--line);display:grid;place-items:center;font-size:13px;flex:0 0 32px}
   .who{font-size:13px;font-weight:700} .sub{font-size:12px;color:#6b6b7a}
-  .zk{background:#e6ffe9;border:2px solid var(--ink);border-radius:12px;padding:9px 11px;font-size:11px;color:#14532d;box-shadow:3px 3px 0 var(--ink);transform:rotate(-0.2deg)}
+  .zk{background:#eef7f0;border:1px solid #b7e5c2;border-radius:10px;padding:9px 11px;font-size:11px;color:#14532d}
   #toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;border-radius:14px;padding:12px 16px;font-size:13px;display:none;max-width:92%;z-index:50;box-shadow:0 16px 40px rgba(0,0,0,.24);border:2px solid #fff}
   .explore-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:14px}
   @media(max-width:700px){.explore-grid{grid-template-columns:1fr}}
-  .explore-card{border:2.5px solid var(--ink);border-radius:16px;padding:12px;background:#fff;cursor:pointer;box-shadow:4px 4px 0 var(--ink);transition:.15s}
-  .explore-card:hover{transform:translate(-1px,-1px) rotate(0.3deg);box-shadow:6px 6px 0 var(--ink)}
+  .explore-card{border:1px solid var(--line);border-radius:14px;padding:12px;background:#fff;cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,.06);transition:.15s}
+  .explore-card:hover{box-shadow:0 4px 12px rgba(0,0,0,.08)}
   .sticker{position:absolute;top:-8px;right:-8px;background:var(--pink);color:#fff;border:2px solid var(--ink);border-radius:999px;padding:4px 8px;font-size:10px;font-weight:800;transform:rotate(6deg);box-shadow:2px 2px 0 var(--ink)}
 </style>
 </head>
@@ -89,7 +89,7 @@
 <div class="blobs"><div class="blob blob1"></div><div class="blob blob2"></div><div class="blob blob3"></div></div>
 <div class="marquee"><span>Sealed Bids • ZK Solvency • Vickrey Fair • Anti-Sniping • Auto Refunds • Midnight Network • Compact 0.5.2 • 5 ZK Circuits • Sealed Bids • ZK Solvency • Vickrey Fair •</span></div>
 <header>
-  <div class="brand" onclick="navigate('auctions')"><div class="mark">◐</div><b>MidnightShield</b><small>STUDIO</small></div>
+  <div class="brand" onclick="navigate('auctions')"><div class="mark">M</div><b>MidnightShield</b><small>STUDIO</small></div>
   <nav><a href="#" id="nav-explore" onclick="navigate('explore');return false">Explore</a><a href="#" id="nav-auctions" class="active" onclick="navigate('auctions');return false">Auctions</a><a href="#" id="nav-create" onclick="navigate('create');return false">Create</a></nav>
   <div class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20 -3 -3"/></svg><input id="searchInput" placeholder="Search collections, NFTs, artists" oninput="handleSearch(this.value)"></div>
   <button class="wallet" id="walletBtn" onclick="toggleWallet()"><span class="dot" id="walletDot" style="display:none"></span><span id="walletLabel">Connect</span></button>
@@ -109,7 +109,7 @@
       <div class="card">
         <div class="media">
           <img src="../project-media/01-cover-3x2.png" alt="Midnight Shield NFT">
-          <div class="chip">● Sealed — chain sees only hash + proof</div>
+          <div class="chip">Sealed — chain sees only hash + proof</div>
         </div>
         <div class="pad">
           <div style="display:flex;justify-content:space-between"><span class="label">Collection</span><span class="label">Token</span></div>
@@ -143,7 +143,6 @@
         <button class="btn btn-primary" id="placeBtn" style="margin-top:12px" onclick="placeBid()">Place Sealed Bid — disclose(hash)</button>
         <button class="btn btn-ghost" id="revealBtn" style="margin-top:8px" onclick="revealBid()">Reveal (after deadline)</button>
         <div class="helper">Chain sees only <span class="mono" id="lastCommit">0x9f3a…</span> + ZK proof. Amount + salt stay local.</div>
-        <div class="note" style="margin-top:12px"><b>How it works:</b> <span class="mono">C = H(amount || salt || nft || deadline)</span> → <span class="mono">disclose(C)</span>. Reveal checks <span class="mono">H(amount' || salt') == C</span>.</div>
       </div>
 
       <div class="card pad" style="margin-top:16px">
@@ -256,7 +255,7 @@ function renderHistory(){
     const isYou = wallet && b.bidder===wallet;
     const when = Math.round((Date.now()-b.ts)/60000)+'m ago';
     const pill = b.revealed ? '<span class="pill" style="background:#e0f2fe;color:#0c4a6e;border-color:#bae6fd">revealed</span>' : '<span class="pill">hidden</span>';
-    return `<div class="item"><div class="ic">${isYou?'◎':(b.revealed?'●':'◯')}</div><div><div class="who">${isYou?'You':b.bidder} • ${when}</div><div class="sub">${b.revealed?b.amount+' DUST — revealed': 'hidden • '+b.commitment}</div></div>${pill}</div>`;
+    return `<div class="item"><div class="ic" style="background:#f4f4f5"></div><div><div class="who">${isYou?'You':b.bidder} • ${when}</div><div class="sub">${b.revealed?b.amount+' DUST — revealed': 'hidden • '+b.commitment}</div></div>${pill}</div>`;
   }).join('') || '<div class="helper">No bids yet.</div>';
   document.getElementById('bidsCount').textContent = `${bids.length} committed • ${bids.filter(b=>b.revealed).length} revealed`;
   const hasHidden = wallet && bids.some(b=>b.bidder===wallet && !b.revealed);
