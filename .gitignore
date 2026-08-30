@@ -1,0 +1,23 @@
+# Rust / Cargo
+/target/
+contracts/target/
+**/target/
+Cargo.lock
+# keep contracts/Cargo.lock? comment out if you want to keep
+# Node
+node_modules/
+sdk/dist/
+sdk/dist/esm/
+marketplace-fork/dist/
+marketplace-fork/node_modules/
+# OS
+.DS_Store
+.env
+# Compact artifacts
+/tmp/compact-output/
+# Midnight keys
+*.key
+*.sk
+# Editor
+.vscode/
+.idea/
